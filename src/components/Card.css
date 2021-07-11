@@ -1,0 +1,225 @@
+.card{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 200px;
+    padding: 5px;
+    background-color: rgb(66, 102, 175);
+    border-radius: 10px;
+    position: relative;
+    margin: 8px;
+}
+
+.card h2{
+    margin: 0 ;
+    padding: .2rem;
+}
+
+.card-footer {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+.card-wrap{
+    cursor: pointer;
+    width: 210px;
+    height: 360px;
+    perspective: 1000px;
+}
+.card-inner{
+    position:relative;
+    width:100%;
+    height: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.card-wrap .card, .card-back{
+    position: absolute;
+     -webkit-backface-visibility: hidden;
+     backface-visibility: hidden;
+    
+}
+.card-back{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+    margin: auto;
+    background-color: rgb(66, 102, 175);
+    border-radius: 10px;
+    width: 200px;
+    height: 350px;
+    transform: rotateY(180deg);
+}
+
+.card-back h2{
+    margin: 0;
+}
+
+.card-back ul{
+    padding: 0;
+}
+.card-back li{
+    color: darkgray;
+    margin: .6rem;
+    font-size: 1.1rem;
+}
+.card-back ul strong{
+    color: black;
+}
+
+.card-wrap:hover .card-inner {
+    transform: rotateY(180deg);
+}
+.card-trending{
+    position: relative;
+    width: 140px;
+    margin: 8px;
+    height: 200px;
+    display: flex; 
+}
+.poster-trending{
+    border-radius: 6px;
+}
+
+.trending-container{
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    justify-items: center;
+    overflow-x: auto;
+}
+.trending-container::-webkit-scrollbar{
+    display: none;
+}
+/* width */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+ 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: red;
+    border-radius: 6px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #b30000;
+}
+
+.poster {
+    border-radius: 10px;
+}
+
+.btn-more{
+    padding: 1px 10px;
+    border: none;
+    border-radius: 8px;
+    height: 36px;
+    font-weight: bold;
+}
+
+.btn-more:hover{
+    background: turquoise;
+}
+
+.search-form{
+    width: 100%; 
+    background: rgba(151, 151, 151, 0.30);
+    padding: 1rem;
+}
+
+.search-container{
+    margin: auto;
+    width: 50%;
+    background: whitesmoke;
+    border-radius: 1em;
+}
+
+.search-input{
+    width: 100%;
+    padding: .4rem;
+    font-weight:bold;
+    text-align:center;
+    border: none;
+    border-radius: 1em;
+    font-size: 1rem;
+}
+
+.people-wrapper{
+    display: flex;
+    flex-flow:row wrap;
+    margin:1rem 2rem;
+}
+
+@media (max-width: 720px){
+     .poster-trending{
+        object-fit: contain;
+     }
+
+      .people-wrapper {
+          margin: 1rem 0;
+      }
+      .search-container{
+          width: 70%;
+      }
+}
+
+@media (max-width: 430px){
+    .card{
+        width: 280px;
+    }
+
+    .people-wrapper .card-wrap{
+        height: 400px;
+    }
+    
+     .people-wrapper .poster {
+         object-fit: cover;
+         height: 350px;
+     }
+
+    .people-wrapper .card-back{
+        height: 400px;
+        width: 290px;
+        right:6px;
+    }
+ .search-container {
+     width: 85%;
+ }
+ .people-wrapper{
+     margin: 1rem;
+ }
+}
+
+@media (max-width:300px){
+    .shows-content .card{
+        width: 220px;
+        height: fit-content;
+    }
+
+    .shows-content .poster{
+        object-fit: cover;
+    }
+    .people-wrapper {
+        margin: 1rem 0;
+    }
+
+    .people-wrapper .card, .people-wrapper .card-back{
+        width: 245px;
+    }
+
+    .people-wrapper .poster{
+        height: 320px;
+    }
+}

@@ -1,0 +1,52 @@
+.content-wrapper{
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.personal-details{
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    padding: .5rem;
+    box-shadow: 5px 4px 5px black;
+}
+
+.details{
+    color: blanchedalmond;
+    margin: .4rem 0 0 0;
+}
+
+.details strong{
+    color: black;
+}
+
+.biography{
+    width: 80%;
+    padding: 1rem;
+}
+
+.bio{
+    line-height: 1.7;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 960px){
+    .content-wrapper{
+        flex-flow: column nowrap;
+    }
+    .personal-details{
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .personal-details img{
+        width: 250px;
+    }
+
+    .biography{
+        width: 100%;
+    }
+}
