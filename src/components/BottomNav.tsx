@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import MovieIcon from '@mui/icons-material/Movie';
-import { Home } from '@mui/icons-material';
+// import { Home } from '@mui/icons-material';
 import PersonIcon from '@mui/icons-material/Person';
 import FavouriteIcon from '@mui/icons-material/Favorite';
 import { useNavigate } from 'react-router-dom';
@@ -16,7 +16,7 @@ export default function BottomNav() {
   useEffect(() => {
     switch (value) {
       case 0:
-        navigate("/");
+        navigate("/home");
         break;
       case 1:
         navigate("/people");
@@ -27,6 +27,7 @@ export default function BottomNav() {
       default:
         break;
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[value])
 
   // if (windowWidth > 720) {

@@ -1,9 +1,12 @@
 import {styled }from '@mui/material/styles';
 import { TextField } from '@mui/material';
 
-const TextInput = styled(TextField)({  
+const TextInput = styled(TextField)(({theme})=>({  
 
       width: "80%",
+      [theme.breakpoints.down('sm')]:{
+        width: "100%",
+      },
         '.MuiInputBase-root':{
           color: 'white',
           margin: "14px 0"
@@ -35,6 +38,6 @@ const TextInput = styled(TextField)({
             borderRadius: 24}
         }
     }
-    )
+    ))
 
-export default TextInput
+export default TextInput;

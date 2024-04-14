@@ -13,20 +13,20 @@ type propTypes={
     onClick: React.MouseEventHandler,
     btnType?: "button" | "submit" | "reset",
     btnSize?: "small" | "medium" | "large",
-    btnColor?: string,
+    btnColor?: "primary" | "secondary" | "info" | "warning" | "success" | "error" | "inherit",
     variant?: "text" | "outlined" | "contained",
     sx?: any
 }
-const StyledBtn = ({children, onClick, btnSize="medium", btnColor ='secondary', btnType="button", variant="contained",sx}:propTypes)=>{
+const StyledBtn = ({children, onClick, btnSize="medium", btnColor ='primary', btnType="button", variant="contained",sx, classes = null}:propTypes)=>{
 
 
     return(
         <Button sx={{
-            color:btnColor,
+            // color:btnColor,
             borderRadius: 6,
             ...sx
         }} 
-        onClick={onClick} type={btnType} size={btnSize} variant={variant} > {children}</Button>
+        onClick={onClick} color={btnColor} type={btnType} size={btnSize} variant={variant} className={classes} > {children}</Button>
     )
 }
 

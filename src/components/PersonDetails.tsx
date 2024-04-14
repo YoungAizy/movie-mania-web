@@ -6,10 +6,10 @@ import { useParams } from 'react-router-dom';
 const PersonDetails = () => {
     const { id } = useParams();
     return (
-        <div>
-            <Header isHomePage={ false}/>
+        <>
+            <Header isHomePage={false} setTabIndex={undefined} setContent={undefined}/>
             <PersonContent id={id} />
-        </div>
+        </>
     )
 }
 

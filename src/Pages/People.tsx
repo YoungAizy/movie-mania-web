@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate }  from 'react-router-dom';
 import Header from '../components/Header.tsx'
 import axios from 'axios'
-import { img_300, unavailable } from '../config/config'
-import { IconButton } from '@mui/material';
+import { img_300, unavailable } from '../config/config.ts'
+import { IconButton, Badge } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import '../styles/Card.scss'
 import CustomPagination from '../components/Pagination/CustomPagination.tsx';
@@ -48,9 +48,14 @@ export default function People() {
         // console.log("hey", savedFaves)
         const fetch = async () => {
             setPeople([])
+            try{
             const {data} = await axios(`https://api.themoviedb.org/3/person/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${page}`);
+            console.log("returned", data)
             setPeople(data.results);
             setNumOfPages(data.total_pages)
+            }catch(error){
+                console.log("Error:",error.status)
+            }
         }
         !searching && fetch();
 
@@ -68,7 +73,7 @@ export default function People() {
             </form>
             <div className="people-wrapper">
                 {people && people.map((person: {}) => (
-                    <div key={person.id} style={{ margin: "1rem" }}><CardPerson faved={savedFaves} person={person} saveFave={saveFave} /></div>))}
+                    <div key={person.id} style={{ margin: ".5rem auto" }}><CardPerson faved={savedFaves} person={person} saveFave={saveFave} /></div>))}
             </div>
             <CustomPagination numofPages={numofPages} setPage={!searching ? setPage:setSearchPages }/>
         </div>
@@ -78,17 +83,18 @@ export default function People() {
 const FrontCard = ({ poster, name, department }) => {
     return (  
        <div className="card">
+        <Badge badgeContent={department} color="secondary" />
             <img src={poster ? `${img_300}${poster}`: unavailable}  alt='' className="poster"/>
             <h2>{name}</h2>
-            <div className="card-footer">
+            {/* <div className="card-footer">
                 <span className="span-dark">{department}</span>
-            </div>
+            </div> */}
         </div>
     )
 }
 type cardPropTypes={
     person: {},
-    saveFave: React.MouseEventHandler,
+    saveFave: Function,
     faved: any[],
     isFav?: boolean,
     setClicked: Function,
@@ -114,9 +120,9 @@ export const CardPerson = ({ person, saveFave, isFav, setClicked=()=>{}, faved }
                         <h2>{person.name}</h2>
                         <ul>
                             <li><strong>Career: </strong>{person.known_for_department}</li>
-                            <li><strong>Known For: </strong> 
+                            <li className='known-for'><strong>Known For: </strong> 
                             { person['known_for'].map(movie=>(<i key={movie.id}>{movie.title}, </i>))}</li>
-                            <li><strong>Popularity: </strong> 50.9</li>
+                            <li><strong>Popularity: </strong> {Number.parseInt(person.popularity)} </li>
                         </ul>
                         <div className='card-footer'>
                             <button className='btn-more' onClick={()=>getPersonInfo(person.id)}>More</button>

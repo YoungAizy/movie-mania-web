@@ -1,0 +1,33 @@
+.tab{
+    background-color: white;
+    color: black;
+    height: -webkit-fill-available;
+    min-height: 60vh;
+    // padding: 1rem 3rem;
+    padding: .5rem 0;
+    padding-bottom: 3rem;
+}
+
+@media screen and (min-width: 630px) {
+    .tab{
+        display: flex;
+        flex-flow: row wrap;
+        padding-left: 6px;
+        padding-right: 6px;
+        justify-content: center;
+    }   
+}
+
+@media screen and (min-width: 970px){
+    .tab{
+        padding-left: 3.5%;
+        padding-right: 3.5%;
+    }
+}
+
+@media screen and (min-height: 900px) {
+    .tab{
+        min-height: calc(100vh - 260px);
+        // padding-bottom: 6em;
+    }
+}

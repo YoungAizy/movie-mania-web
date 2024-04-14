@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
-import { img_300, unavailable } from '../config/config.js'
+import { img_300, unavailable } from '../config/config.ts'
 import '../styles/Card.scss'
 import ContentModal from './ContentModal/ContentModal.tsx'
 

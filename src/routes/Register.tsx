@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import UserForm from "../components/UserForm.tsx";
 import NavBar from "../components/NavBar.tsx";
 import AuthForm from "../components/AuthForm.tsx";
-import { InputLabel } from "@mui/material";
-import TextInput from "../components/styled/TextInput.tsx";
 import StyledBtn from "../components/StyledBtn.tsx";
 import WatchList from "../components/WatchList.tsx";
+import "../styles/register.scss"
 
 const Register = ()=>{
+    const [dialogOpen,setDialogOpen] = useState(false);
+    const [processing,setProcessing] = useState(false);
     //username(unique), email(unique), password, age >= 13, picture
     const [username, setUsername] = useState("")
     const [picture, setPicture]  = useState("")
@@ -34,23 +35,19 @@ const Register = ()=>{
 
     return(
         <>
-            <NavBar />
-            <form className="flex-center-column" style={{padding:'2rem 0'}}>
-                <h2 className="uppercase">Registration</h2>
-                <UserForm username={username} setUsername={setUsername} age={age} setAge={setAge}
-                picture={picture} setPicture={setPicture} />
-                <div style={{width:"80%", marginBottom:16}}>
-                    <AuthForm e_mail={email} setEmail={setEmail} passwrd={password} setPasswrd={setPassword} passwrdLabel="Password:"
-                        passwrd2={verifyPassword} setPasswrd2={setVerifyPassword} passwrd2Label="Repeat Password:" />
-                </div>
-                {/* <div className='flex-center-column' style={{width:"80%", marginBottom:16}}>
-                    <InputLabel >Repeat Password</InputLabel>
-                    <TextInput type="password" value={verifyPassword} onChange={e=>setVerifyPassword(e.target.value)} 
-                        variant='outlined'/>
-                </div> */}
-                <StyledBtn btnType="submit" onClick={register} >Register</StyledBtn>
-                <WatchList open={open} setOpen={setOpen}/>
-            </form>
+            <NavBar dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} processing={processing} authText="Registering..." >
+                <form className="flex-center-column" style={{padding:'0rem 0 1.2rem'}}>
+                    <h2 className="uppercase">Registration</h2>
+                    <UserForm username={username} setUsername={setUsername} age={age} setAge={setAge}
+                    picture={picture} setPicture={setPicture} />
+                    <div className='reg-auth-form'>
+                        <AuthForm e_mail={email} setEmail={setEmail} passwrd={password} setPasswrd={setPassword} passwrdLabel="Password:"
+                            passwrd2={verifyPassword} setPasswrd2={setVerifyPassword} passwrd2Label="Repeat Password:" />
+                    </div>
+                    <StyledBtn btnType="submit" onClick={register} >Register</StyledBtn>
+                    <WatchList open={open} setOpen={setOpen} setProcessing={setProcessing}/>
+                </form>
+            </NavBar>
         </>
     )
 }

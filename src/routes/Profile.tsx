@@ -4,6 +4,7 @@ import MyTabs from '../components/MyTabs.tsx'
 import BottomNav from '../components/BottomNav.tsx'
 import FeedTab from '../components/FeedTab.tsx'
 import CollectionsTab from '../components/CollectionsTab.tsx'
+import '../styles/profile.scss';
 
 export default function Profile() {
     const tabs = [FeedTab,CollectionsTab]

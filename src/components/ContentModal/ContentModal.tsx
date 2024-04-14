@@ -1,20 +1,21 @@
-import React,{useState, useEffect} from 'react';
+import React,{useState, useEffect, useContext} from 'react';
 import './ContentModal.css'
 import Modal from '@mui/material/Modal';
-import Backdrop from '@mui/material/Backdrop';
 import Fade from '@mui/material/Fade';
 import axios from 'axios';
-import { img_500, unavailable, unavailableLandscape } from '../../config/config';
+import { img_500, unavailable, unavailableLandscape } from '../../config/config.ts';
 import { Button, IconButton } from '@mui/material';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import StarIcon from '@mui/icons-material/Star';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { AppContext } from '../../Context/AppContext.tsx';
 
 const useStyles = {
     paper: {
     width: '80%',
     height: '90%',
-    borderRadius: 8,
-    backgroundColor: 'rgba(127, 128, 129, 0.8)',
+    borderRadius: 12,
+    backgroundColor: '#41445bf2',
     border: '1px solid darkgray',
     // padding: theme.spacing(2, 2, 1, 1),
     color: 'white'
@@ -25,19 +26,32 @@ type props ={
   children: React.ReactNode;
   type: string; 
   id: number;
-  faves: any; 
+  title: string;
+  faves: any;
+  // faves: [{}] | null; 
   stored?: any; 
-  contentStyle: any
+  contentStyle?: any;
+  isSearch?: boolean
 }
 
-export default function ContentModal({children, type, id, faves, stored, contentStyle}:props) {
+export default function ContentModal({children, type, id, faves, stored, contentStyle, isSearch, title}:props) {
   const classes = useStyles;
     const [open, setOpen] = useState(false);
-    const [content, setContent] = useState([]);
+    const [content, setContent] = useState(null);
     const [video, setVideo] = useState('')
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const searchText = searchParams.get('search');
+    const {setSelected} = useContext(AppContext)
+    // const content = searchContent ?  searchContent[id]: null;
 
-  const handleOpen = () => {
-    setOpen(true);
+  const onCardClick = () => {
+    if(isSearch){
+      setSelected(content);
+      navigate(`/search?query=${searchText}&selection_name=${title}&type=${type}&id=${id}`);
+    }else{
+      setOpen(true);
+    }
   };
 
   const handleClose = () => {
@@ -58,10 +72,12 @@ export default function ContentModal({children, type, id, faves, stored, content
         setVideo(data.results[0]?.key)
     }
     useEffect(() => {
-        fetchData();
-        fetchVideo();
+        if(open){
+          fetchData();
+          fetchVideo();
+        }
         // eslint-disable-next-line 
-    },[])
+    },[open])
 
   const saveToStorage = (e, newFave) => {
 
@@ -97,7 +113,7 @@ export default function ContentModal({children, type, id, faves, stored, content
     
 
   return <>
-    <div className={contentStyle} style={{cursor:'pointer'}} color='inherit' onClick={handleOpen}>
+    <div className={contentStyle} style={{cursor:'pointer'}} color='inherit' onClick={onCardClick}>
       {children}
     </div>
     <Modal
@@ -111,10 +127,6 @@ export default function ContentModal({children, type, id, faves, stored, content
       open={open}
       onClose={handleClose}
       closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{
-        timeout: 500,
-      }}
     >
       <Fade in={open}>
         <div style={classes.paper}>
@@ -122,16 +134,18 @@ export default function ContentModal({children, type, id, faves, stored, content
                         <img  src={content.poster_path ? `${img_500}${content.poster_path}` : unavailable} alt={content.name || content.title} className="ContentModal-portrait" />
                         <img src={content.backdrop_path ? `${img_500}${content.backdrop_path}` : unavailableLandscape} alt={content.name || content.title} className="ContentModal-landscape" />
                         <div className="ContentModal-about">
-                            <span className='ContentModal-title span-dark'>
-                                {content.name || content.title}({(content.first_air_date || content.release_date || '....').substring(0, 4)})</span>
-                            {content.tagline && (<i className='tagline span-dark'>{content.tagline}</i>)}
-                            <span className="ContentModal-description span-dark">{content.overview}</span>
+                            <span className='ContentModal-title'>
+                                {title} ({(content.first_air_date || content.release_date || '....').substring(0, 4)})</span>
+                            {content.tagline && (<i className='tagline'>{content.tagline}</i>)}
+                            <span className="ContentModal-description">{content.overview}</span>
                             <div style={{display:'flex', flexFlow: "row nowrap", justifyContent:'space-between'}}>
                               
                             <Button style={{width:'60%'}} size='medium' variant='contained' startIcon={<YouTubeIcon />} color='secondary' target='_blank' href={`https://www.youtube.com/watch?v=${video}`} >
                                 WatchThe Trailer
                             </Button>
-                <IconButton onClick={e => saveFave(e)} style={{ justifySelf: 'end' }} size="large"><StarIcon style={{ color: `${faves[id] ? "rgb(235, 222, 47)":'black'}`}}/></IconButton>
+                            {content && (<IconButton onClick={e => saveFave(e)} style={{ justifySelf: 'end' }} size="large">
+                              <StarIcon style={{ color: `${faves?.hasOwnProperty(id) ? "rgb(235, 222, 47)":'black'}`}}/>
+                            </IconButton>)}
                             </div>
                         </div>
               </div>)}

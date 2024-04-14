@@ -1,0 +1,47 @@
+.feed-card{
+    display: flex;
+    flex-flow: row wrap;
+    height: fit-content;
+    width: 300px;
+    background-color: #708090c9;
+    margin: 1rem auto;
+    border-radius: 1rem;
+}
+
+.thumbnail{
+    // width: 30%;
+    // height: 100%;
+    //for devices in 300px range
+    width: 100%;
+    height: 150px;
+}
+
+.thumbnail img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    // border-radius: 0 1rem;
+    border-radius: 1rem;
+}
+
+.feed-card-body{
+    padding: 0 10px 10px;
+    min-width: 300px;
+}
+
+.feed-card-title{
+    margin-bottom: 4px;
+}
+
+@media screen and (min-width: 630px) {
+    .feed-card{
+        margin: 1rem 10px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+
+    .feed-card{
+        width: 80%;
+    }
+}

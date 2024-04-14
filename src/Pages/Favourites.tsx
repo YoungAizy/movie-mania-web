@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react'
 import ContentModal from '../components/ContentModal/ContentModal.tsx';
 import Header from '../components/Header.tsx'
 import PersonContent  from '../components/PersonContent.tsx';
-import { img_300, unavailable } from '../config/config.js';
+import { img_300, unavailable } from '../config/config.ts';
 import { CardPerson } from './People.tsx';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack.d.ts';
 
@@ -37,7 +37,7 @@ export default function Favourites() {
                     </h1>
                     <div className='people-container' style={{height: `${people.length===0 && "auto"}`}}>
                         {people.length>0 ? people.map(person =>
-                            (<div key={person.id} style={{ margin: "0 1rem 1rem" }}><CardPerson person={person} saveFave={removeFave} faved={c} isFav={true} setClicked={setPersonClicked} /></div>)) :
+                            (<div key={person.id} ><CardPerson person={person} saveFave={removeFave} faved={c} isFav={true} setClicked={setPersonClicked} /></div>)) :
                             (  <div style={{width:"100%"}}>
             <h4 style={{textAlign:"center"}}>No Content.</h4>
         </div>)}

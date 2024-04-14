@@ -22,7 +22,8 @@ const CustomPagination = ({ numofPages, setPage }) => {
         window.scroll(0, 0);
     }
     return (
-        <div style={{ width: "100%", display: "flex", justifyContent: "center", marginTop: "12px" }}>
+        <div style={{ width: "100%", display: "flex", 
+        justifyContent: "center", marginTop: "12px", padding: "0 16px 16px" }}>
             <StyledEngineProvider injectFirst>
                 <ThemeProvider theme={darkTheme}>
 

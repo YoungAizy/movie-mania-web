@@ -5,7 +5,7 @@ import Tab from '@mui/material/Tab';
 import '../styles/Header.scss';
 import MenuIcon from '@mui/icons-material/Menu';
 import { createTheme } from '@mui/material';
-import { ThemeProvider, Theme, StyledEngineProvider } from '@mui/material/styles';
+import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 
 
 // declare module '@mui/styles/defaultTheme' {
@@ -54,7 +54,7 @@ const closeNav = ()=> {
               
             </div>
         
-            {(window.innerWidth>720 || isHomePage) && <span id="open" onClick={openNav} className="span-dark"><MenuIcon></MenuIcon></span>}
+            {(window.innerWidth>720 || isHomePage) && <span id="open" onClick={openNav} className=""><MenuIcon></MenuIcon></span>}
             <span className="first title">Movie</span>
             <span className="second title">App</span>
             {isHomePage && (

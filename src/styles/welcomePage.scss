@@ -1,0 +1,326 @@
+.landing-search-content{
+  // height: 0%;
+  width: 0%;
+  padding: 2px 8px 8px;
+  transform-origin: center;
+  transform: translate(50vw,40vh);
+  transition: all 4s ease 1s;
+}
+.show-card-list{
+  height: 100% !important;
+  width: 100% !important;
+}
+#card-list-wrapper{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  height: 0%;
+  width: 0%;
+  overflow: hidden;
+  transition: all 10ms step-end 4.1s;
+}
+.search-results{
+  min-height: 100%;
+  // height: fit-content;
+  width: 100%;
+  background-color: #282c34;
+  transform: translate(0%,0%);
+}
+
+.intro-container{
+  flex-direction:column; 
+  align-items:center; 
+  justify-content:center;
+}
+.hide{
+  height: 0% !important;
+  width:0% !important;
+}
+// #search-wrapper{
+//   transition-delay: 0.6s;
+//   transition: all 0.8s linear;
+// }
+.flex-top{
+  justify-content: flex-start;
+  height: 10% !important;
+}
+.search-top{
+  justify-content: space-between !important;
+  flex-wrap: nowrap;
+  align-items: center;
+
+  .search-wrapper{
+    width: 75%;
+  }
+}
+#search-section{
+  height: 56%;
+  width: 100%;
+  position: relative;
+  transition: all 5s ease-in-out;
+}
+
+.search-section{
+  height: 100% !important;
+  width: 100%;
+}
+
+.inline-btn{
+  padding: 5px 0 !important;
+}
+
+@keyframes kamui{
+  0%{
+    clip-path: polygon(
+      50% 20%,
+      66.6667% 26.66668%, 
+      83.333% 33.3332%,
+      100% 40%, 
+      100% 40%,
+      100% 50%, 100% 60%,
+      100% 70%, 100% 80%,
+      100% 90%, 
+      100% 100%,
+      83.333% 100%, 66.6667% 100%,
+      50% 100%, 33.33% 100%,
+      16.6% 100%, 
+      0% 100%,
+      0% 80%, 0% 60%,
+      0% 40%, 0% 20%,
+      0% 0%, 16.6% 6.64%,
+      33.33% 13.332%
+    );
+  }
+
+  10%{
+    clip-path: polygon(
+      23.5497% 13.5942%, 37.5657% 39.9309%,
+      45.2962% 5.2465%, 44.2661% 35.0627%,
+      68.3031% 8.8904%, 52.503% 34.197%,
+      86.4058% 23.5497%, 60.0691% 37.5657%, 
+      94.7535% 45.2964%, 64.9373% 44.2661%, 
+      91.1095% 68.3033%, 65.8030% 52.503%,
+      76.4503% 86.4058%, 62.4343% 60.0691%, 
+      54.7038% 94.7535%, 55.7339% 64.9373%,
+      31.6969% 91.1096%, 47.4970% 65.8030%,
+      13.5942% 76.4503%, 39.9309% 62.4344%,
+
+      5.2465% 54.7036%, 35.0627% 55.7339%,
+      8.8905% 31.6967%, 34.197% 47.4970%,
+    );
+  }
+
+  25%{
+    clip-path: polygon(
+    12.5% 50%,       42.2726% 52.0706%, 
+    17.5240% 31.25%, 42.2726% 47.9294%,
+    31.25% 17.5240%, 44.3431% 44.3432%, 
+
+    50% 12.5%,       47.9294% 42.2726%, 
+    68.75% 17.5240%, 52.0706% 42.0003%, 
+    82.476% 31.25%,  55.6569% 44.3432%, 
+    
+    87.5% 50%,       57.7274% 47.9168%,
+
+    82.476% 68.75%,  57.724% 52.0832%,  
+    68.75% 82.476%,  55.6569% 55.6568%,
+
+    50% 87.5%,       52.0706% 57.7274%, 
+    31.25% 82.476%,  47.9294% 57.7274%, 
+    17.5240% 68.75%, 44.3431% 55.6569%, 
+    );
+  }
+
+  50%{
+    clip-path: polygon(
+      50% 75%,           51.2941% 54.8296%,
+      41.6667% 73.5702%,   48.7059% 54.8296%, 
+      33.3333% 68.6339%, 46.4645% 53.5355%, 
+      25% 50%,           45.1704% 51.2941%, 
+      33.3333% 31.36613%,45.1704% 48.7059%,  
+      41.6667% 26.4298%,  46.4645% 46.4645%,
+      50% 25%,           48.7059% 45.1704%,
+      58.3333% 26.4298%, 51.2941% 45.1704%, 
+      66.6667% 31.36613%,53.5355% 46.4645%,  
+      75% 50%,            54.8296% 48.7059%, 
+      66.6667% 68.6339%,  54.8296% 51.2941%, 
+      58.3333% 73.5702%,  53.5355% 53.5355%,
+    );
+  }
+
+  70%{
+    clip-path: polygon(
+      64.2658% 54.6354%, 53.9945% 50.2097%,
+      60.037% 61.1471%, 53.3547% 52.1785%,
+      53.1187% 64.6722%, 51.81596% 53.5640%,
+      45.3647% 64.2658%, 49.7907% 53.9945%,
+      
+      38.8528% 60.037%, 47.8214% 53.3547%,
+      35.3278% 53.1187%, 46.43597% 51.8160%,
+      35.7342% 45.3647%, 46.0055% 49.7907%,
+      
+      39.9630% 38.8528%, 46.6453% 47.8214%,
+      46.8813% 35.3278%, 48.184038% 46.4360%,
+      
+      54.6353% 35.7342%, 50.2093% 46.0055%,
+      61.1472% 40.508%, 52.1786% 46.6453%,
+      64.6722% 46.88135%, 53.5640% 48.1840%
+    );
+  }
+
+  90%{
+    clip-path: polygon(
+      52.9389% 45.9549%, 51.5543% 48.7414%,
+      54.5677% 47.9663%, 51.9754% 49.6873%,
+      54.9726% 49.4773%, 51.8672% 50.7166%,
+      54.0451% 52.9389%, 51.2586% 51.5543%,
+      52.0337% 54.5677%, 50.3129% 51.9754%,
+      49.4774% 54.9726%, 49.2833% 51.8672%,
+      47.0611% 54.0451%, 48.4457% 51.2586%,
+      45.4322% 52.0337%, 48.0246% 50.3127%,
+      45.0274% 49.4773%, 48.1328% 49.2834%,
+      45.9549% 47.0611%, 48.74136% 48.4457%,
+      47.9663% 45.4323%, 49.6871% 48.0246%,
+      50.5226% 45.0274%, 50.7167% 48.1328%
+    );
+  }
+
+  100%{
+    clip-path: none;
+    height: 0 !important;
+    width: 0 !important;
+  }
+}
+
+
+.welcome-pg{
+  background: url('../assets/pic2.jpg') #808080bd;
+  background-blend-mode: multiply;
+}
+main{
+  height: -webkit-fill-available;
+  display: flex;
+  flex-direction: column;
+
+}
+#intro-text{
+  position: relative;
+  transition: all 3s ease;
+  /* indianred */
+  height:44%;
+  z-index: 5;
+  
+}
+
+#landing-search-content-overlay{
+  background: url('../assets/pic.jpg');
+  background-size: cover;
+  background-color: rgba(.5, .5, .5, .4);
+  background-blend-mode: hard-light;
+  background-position: center center;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 3;
+  // clip-path: polygon(0% 0%, 100% 40%, 100% 100%, 0% 100%);
+  clip-path: polygon(
+    50% 20%,
+    66.6667% 26.66668%, 
+    83.333% 33.3332%,
+    100% 40%, 
+    100% 40%,
+    100% 50%, 100% 60%,
+    100% 70%, 100% 80%,
+    100% 90%, 
+    100% 100%,
+    83.333% 100%, 66.6667% 100%,
+    50% 100%, 33.33% 100%,
+    16.6% 100%, 
+    0% 100%,
+    0% 80%, 0% 60%,
+    0% 40%, 0% 20%,
+    0% 0%, 16.6% 6.64%,
+    33.33% 13.332%
+  );
+  transition: all 10ms ease-in-out 2.5s;
+}
+
+.landing-content{
+  text-align: center;
+  overflow: hidden;
+  display: block;
+  height: 47.5;
+  // min-height: 41.5%;
+  // max-height: 47.5%;
+  transition: all 2s ease;
+}
+
+.search-content{
+  transform-origin: center;
+  background-size: auto !important;
+  height: 0% !important;
+  width: 0% !important;
+  transform: translate(50%,50%);
+  animation: kamui 3s linear;
+}
+
+
+
+
+.landing-content h1{
+  /* margin-bottom: 6px; */
+  font-size: 26px;
+}
+.landing-content p{
+  margin: 0;
+  line-height: 21px;
+}
+
+main .search-wrapper1{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  /* min-width: 450px; */
+  translate: 4px 32px;
+}
+
+@media screen and (min-width:721px) {
+  #intro-text, .search-section{
+    height: 50%;
+  }
+  #landing-search-content-overlay{
+    clip-path: none;
+  }
+
+  .landing-search-content{
+    width: initial;
+    transform: none;
+  }
+
+  .search-content{
+    background: #282c34;
+    height: 0%;
+    width: 0%;
+    animation: none;
+  }
+  
+}
+
+@media screen and (max-width: 600px) {
+  .search-wrapper{
+    width: 70%;
+  }  
+}
+
+// @media screen and (max-width:392px) {
+//   .inline-btn{
+//     padding: 0 !important;
+//   }
+// }
+
+@media screen and (max-width:320px) {
+  .inline-btn{
+    padding: 0 !important;
+    margin: .5rem 0 !important;
+  }
+}

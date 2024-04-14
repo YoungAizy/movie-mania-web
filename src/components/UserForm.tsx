@@ -2,6 +2,7 @@ import React from 'react';
 import { Avatar, InputLabel } from '@mui/material';
 import TextInput from './styled/TextInput.tsx';
 import '../styles/userForm.scss';
+import '../styles/account.scss';
 
 type props ={
   username: string,
@@ -14,16 +15,21 @@ type props ={
 
 const UserForm = ({username,setUsername, picture, setPicture, age, setAge}:props) => {
     const choosePicture = file=>{
+      console.log('file:', file.type)
+      const metadata = {
+        contentType: 'image/jpeg',
+      };
       const reader = new FileReader();
       reader.onload = e =>{
-        setPicture(e.target.result)
+        console.log(e?.target);
+        setPicture(e?.target.result)
       }
-      reader.readAsDataURL(file)
+      reader.readAsDataURL(file);
     }
   return (
-    <div className='flex-center-column' style={{width:"80%"}}>
+    <div className='flex-center-column auth-form-wrapper'>
       <label htmlFor="avi" style={{cursor:"pointer"}}>
-        <input type="file"  id="avi" accept='image/*' hidden onChange={e=>choosePicture(e.target.files[0])} />
+        <input type="file"  id="avi" accept='image/*' hidden onChange={e=>choosePicture(e?.target.files[0])} />
         <Avatar
           src={picture}
           alt='avatar'
@@ -31,7 +37,13 @@ const UserForm = ({username,setUsername, picture, setPicture, age, setAge}:props
           />
       </label>
       <div style={{width:'100%', textAlign:'center'}}>
-        <InputLabel htmlFor='username' style={{textAlign:'start', marginLeft:'3.3rem'}}>Username:</InputLabel>
+        <InputLabel htmlFor='username' sx={theme=>({
+          textAlign:'start', 
+          marginLeft:'3.3rem',
+          [theme.breakpoints.down("sm")]:{
+            marginLeft:'1rem'
+          }
+          })}>Username:</InputLabel>
         <TextInput id="username" type='text' value = {username}
           onChange={e=>setUsername(e.target.value)}
           variant="outlined" />

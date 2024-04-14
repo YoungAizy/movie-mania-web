@@ -13,15 +13,15 @@ type propTypes={
 
 const Genres = ({ type, genres, setGenres, selectedGenres, setselectedGenres, selectedColor='primary' }:propTypes) => {
     
-    // useEffect(() => {
-    //     const fetchGenres = async () => {
-    //         const {data} = await axios(`https://api.themoviedb.org/3/genre/${type}/list?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`);
-    //         setGenres(data.genres)
-    //     }
+    useEffect(() => {
+        const fetchGenres = async () => {
+            const {data} = await axios(`https://api.themoviedb.org/3/genre/${type}/list?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`);
+            setGenres(data.genres)
+        }
 
-    //     fetchGenres();
+        fetchGenres();
         
-    // },[type,setGenres])
+    },[type,setGenres])
 
     const onSelected = (genre) => {
         setselectedGenres([...selectedGenres, genre]);
@@ -34,10 +34,10 @@ const Genres = ({ type, genres, setGenres, selectedGenres, setselectedGenres, se
     return (
         <div style={{ margin: ".6rem 0" }}>
             {selectedGenres && selectedGenres.map(item => ( 
-                <Chip key={item.id} style={{ margin: ".3rem" }} label={item.name} size='small' clickable color={selectedColor} onDelete={()=>unSelected(item)} />)
+                <Chip key={item.id} sx={{ margin: ".3rem" }} label={item.name} size='small' clickable color={selectedColor} onDelete={()=>unSelected(item)} />)
             )}
             {genres && genres.map(item => ( 
-                <Chip key={item.id} style={{ margin: ".3rem" }} label={item.name} size='small' clickable onClick={()=>onSelected(item)} />)
+                <Chip key={item.id} sx={{ margin: ".3rem", color: 'white' }} label={item.name} size='small' clickable onClick={()=>onSelected(item)} />)
             )}
         </div>
     )

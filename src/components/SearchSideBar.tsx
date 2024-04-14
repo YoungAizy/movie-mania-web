@@ -44,7 +44,7 @@ const SearchSideBar = props => {
             <div className="search">
                 <form style={{background:"white", borderRadius:"8px"}}>
                      <TextField onChange={(e)=>setSearchText(e.target.value)} style={{width:"84.16%", color:"white"}} id="outlined-size-small" label="Search field" type="search" variant="outlined" size="small" />
-                 <button onClick={e => fetchSearch(e)} style={{padding:"6.5px 6px", background:"blue", border:"none", cursor:"pointer", borderBottomRightRadius:"6px", borderTopRightRadius:"6px"}}><SearchIcon></SearchIcon></button>
+                 <button onClick={fetchSearch} style={{padding:"6.5px 6px", background:"blue", border:"none", cursor:"pointer", borderBottomRightRadius:"6px", borderTopRightRadius:"6px"}}><SearchIcon></SearchIcon></button>
                 </form>
                 <Genres genres={ props.genres} setGenres={props.setGenres} selectedGenres={props.selectedGenres} setselectedGenres={props.setselectedGenres} type={props.type} />
             </div>

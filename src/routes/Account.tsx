@@ -6,7 +6,7 @@ import '../styles/account.scss'
 import Genres from "../components/Genres.tsx";
 import AuthForm from "../components/AuthForm.tsx";
 import Divider from '@mui/material/Divider';
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 
 const Account = ()=>{
     //username(unique), email(unique), password, age >= 13, picture

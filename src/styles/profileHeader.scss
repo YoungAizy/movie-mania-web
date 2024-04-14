@@ -1,0 +1,104 @@
+.profile-header{
+    display: flex;
+    flex-flow: row nowrap; //for bigger sized make it row not column
+    border-bottom: 1px solid mediumslateblue;
+}
+
+// for 320px width mobile devices
+.avi{
+    width: 100% !important;
+    height: 150px !important;
+    position: absolute !important;
+    top: 0;
+    background-color: transparent !important;
+}
+
+.user-info{
+    //for 320px width devices
+    width: 100%;
+    max-width: 600px;
+}
+
+.username-wrapper{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    margin-right: 1rem;
+    //for 320px width devices
+    flex-direction: column-reverse;
+    height: 150px;
+}
+
+.username-wrapper h3{
+    color: aliceblue;
+    margin-bottom: .8rem;
+    padding-left: 2px;
+    //for 320px width devices
+    font-size: larger;
+    margin-left: 12px;
+}
+
+.settings-icon{
+    // margin:auto 0;
+    // for 320px width devices
+    margin: 1rem 0;
+    align-self: flex-end;
+}
+
+.carousel{
+    display: contents;
+    margin-right: 16px;
+}
+.carousel>div{
+    display: flex;
+    flex-flow: row nowrap;
+    overflow-x: auto;
+}
+.carousel>div::-webkit-scrollbar{
+    display: none;
+}
+
+@media screen and (min-width:440px) {
+    .profile-header{
+        flex-flow: row nowrap;
+    }
+
+    .avi{
+        position: initial !important;
+        width: 100px !important;
+        min-width: 75px;
+        height: 100px !important;
+        margin: auto 1rem;
+        background-color: #818181 !important;
+    }
+    .user-info{
+        width: calc(100% - 135px);
+        // max-width: 600px;
+    }
+    .username-wrapper{
+        flex-direction: row;
+        height: auto;
+    }
+    .username-wrapper h3{
+        font-size: x-large; // make only large on smaller width devices
+        margin-left: initial;
+    }
+    .settings-icon{
+        margin:auto 0;
+        align-self: initial;
+    }
+}
+
+@media screen and (min-width: 630px) {
+    .profile-header{
+        justify-content: center;
+    }
+    
+}
+
+@media screen and (min-width:720px) {
+    .avi{
+        margin: auto 2rem;
+    }
+    
+}

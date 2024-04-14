@@ -5,9 +5,11 @@ import FeedCard from './FeedCard.tsx'
 const FeedTab = () => {
   return (
     <div className='tab'>
-        <FeedCard />
+        { Array.from(new Array(5)).map((item,index)=>(
+        <FeedCard key={index} />
+        ))}
     </div>
   )
 }
 
-export default FeedTab
+export default FeedTab;
