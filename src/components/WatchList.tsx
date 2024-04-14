@@ -5,10 +5,9 @@ import StyledBtn from './StyledBtn.tsx';
 import { useNavigate } from 'react-router-dom';
 
 const WatchList = ({open,setOpen,setProcessing}) => {
-    const [genres, setGenres] = useState([{name:"comedy", id:1}, {name:"action", id:2}, {name:"horror", id:3}]);
+    const [genres, setGenres] = useState([]);
     const [selectedGenres, setselectedGenres] = useState([]);
-    const [tvGenres, setTvGenres] = useState([{name:"comedy", id:1}, {name:"action", id:2}, {name:"horror", id:3}, 
-    {name:"documentary",id:4}]);
+    const [tvGenres, setTvGenres] = useState([]);
     const [selectedTvGenres, setselectedTvGenres] = useState([]);
 
     const navigate = useNavigate();
