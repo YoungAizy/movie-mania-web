@@ -19,7 +19,7 @@ const Genres = ({ type, genres, setGenres, selectedGenres, setselectedGenres, se
             setGenres(data.genres)
         }
 
-        fetchGenres();
+        if(type) fetchGenres();
         
     },[type,setGenres])
 
@@ -34,7 +34,7 @@ const Genres = ({ type, genres, setGenres, selectedGenres, setselectedGenres, se
     return (
         <div style={{ margin: ".6rem 0" }}>
             {selectedGenres && selectedGenres.map(item => ( 
-                <Chip key={item.id} sx={{ margin: ".3rem" }} label={item.name} size='small' clickable color={selectedColor} onDelete={()=>unSelected(item)} />)
+                <Chip key={item.id} sx={{ margin: ".3rem" }} label={item.name} size='small' clickable color={selectedColor} onDelete={()=>type && unSelected(item)} />)
             )}
             {genres && genres.map(item => ( 
                 <Chip key={item.id} sx={{ margin: ".3rem", color: 'white' }} label={item.name} size='small' clickable onClick={()=>onSelected(item)} />)
