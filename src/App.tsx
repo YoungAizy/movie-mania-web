@@ -16,33 +16,35 @@ import Account from './routes/Account.tsx';
 import SearchInfo from './routes/SearchInfo.tsx';
 import ProtectedRoutes from './routes/ProtectedRoutes.tsx';
 //Context
-// import { AppContext } from './Context/AuthContext.tsx';
-import { ContextProvider } from './Context/AppContext.tsx';
+import { AuthContextProvider } from './Context/AuthContext.tsx';
+import { AppContextProvider } from './Context/AppContext.tsx';
 
 function App() {
 
   return (
     <BrowserRouter>
-      <ThemeProvider theme={AppTheme}>
-        <ContextProvider>
-          <div className="App">
-          <Routes>
-              <Route path="/" element={<LandingPage/>} />
-              <Route path='/register' element={<RegistrationPage />} />
-              <Route path="/home" element={<Shows/>} />
-              <Route path="/people" element={<People />} />
-              <Route path="/people/:id" element={<PersonDetails />} />
-              <Route element={<ProtectedRoutes/> }>
-                <Route path="/favourites" element={<Favourites />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/profile/settings" element={<Account />} />
-              </Route>
-              <Route path="/search" element={<SearchInfo/>} />
-              <Route path="*" element={<Navigate to='/' /> }/>
-          </Routes>
-          </div>
-        </ContextProvider>
-      </ThemeProvider>
+      <AppContextProvider>
+        <AuthContextProvider>
+          <ThemeProvider theme={AppTheme}>
+            <div className="App">
+            <Routes>
+                <Route path="/" element={<LandingPage/>} />
+                <Route path='/register' element={<RegistrationPage />} />
+                <Route path="/home" element={<Shows/>} />
+                <Route path="/people" element={<People />} />
+                <Route path="/people/:id" element={<PersonDetails />} />
+                <Route element={<ProtectedRoutes/> }>
+                  <Route path="/favourites" element={<Favourites />} />
+                  <Route path="/profile" element={<Profile />} />
+                  <Route path="/profile/settings" element={<Account />} />
+                </Route>
+                <Route path="/search" element={<SearchInfo/>} />
+                <Route path="*" element={<Navigate to='/' /> }/>
+            </Routes>
+            </div>
+          </ThemeProvider>
+        </AuthContextProvider>
+      </AppContextProvider>
     </BrowserRouter>
   );
 }
