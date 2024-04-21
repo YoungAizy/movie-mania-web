@@ -1,4 +1,4 @@
-import React, {useState, createContext, useEffect} from 'react';
+import React, {useState, createContext } from 'react';
 import { User } from 'firebase/auth';
 
 interface tempType {
@@ -19,19 +19,17 @@ interface userType{
     username: string;
     photo: string;
     loggedIn: boolean;
+    userId: string;
+    email?: string;
+    verified: boolean;
 }
 export const AuthContext = createContext<authContextType | string | null>(null);
 
 export const AuthContextProvider = ({children})=>{
-    const savedUser = JSON.parse(localStorage.getItem('user'))
-    const [user, setUser] = useState<userType | User | undefined >();
+    const savedUser = JSON.parse(localStorage.getItem('user'));
+    const [user, setUser] = useState<userType | User | undefined >(savedUser);
     const [temp, setTemp] = useState<tempType | null>(null);
-    const [loggedIn, setLoggedIn] = useState<boolean>(false);
-    
-    useEffect(()=>{
-        setUser(savedUser);
-        setLoggedIn(savedUser.loggedIn);
-    },[savedUser]);
+    const [loggedIn, setLoggedIn] = useState<boolean>(savedUser?.loggedIn);
 
     return(
         <AuthContext.Provider value={{user,setUser, temp, setTemp, loggedIn, setLoggedIn}}>
