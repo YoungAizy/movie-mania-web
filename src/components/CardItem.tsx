@@ -10,10 +10,11 @@ interface Props{
     title: string;
     summary: string;
     release_date: string;
-    rating: number | string;
+    rating: number;
     faves: any;
     type: string;
-    isSearch?: boolean
+    isSearch?: boolean;
+    id: number;
 }
 const CardItem = (props: Props) => {
     return (
