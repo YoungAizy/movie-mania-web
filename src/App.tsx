@@ -23,8 +23,8 @@ function App() {
 
   return (
     <BrowserRouter>
-      <AppContextProvider>
-        <AuthContextProvider>
+      <AuthContextProvider>
+        <AppContextProvider>
           <ThemeProvider theme={AppTheme}>
             <div className="App">
             <Routes>
@@ -43,8 +43,8 @@ function App() {
             </Routes>
             </div>
           </ThemeProvider>
-        </AuthContextProvider>
-      </AppContextProvider>
+        </AppContextProvider>
+      </AuthContextProvider>
     </BrowserRouter>
   );
 }
