@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import {Link} from 'react-router-dom'
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import '../styles/Header.scss';
 import MenuIcon from '@mui/icons-material/Menu';
 import { createTheme } from '@mui/material';
 import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
+import NavigationDrawer from './NavigationDrawer.tsx';
 
 
 // declare module '@mui/styles/defaultTheme' {
@@ -16,6 +16,7 @@ import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 
 const Header = ({setTabIndex,isHomePage, setContent})=>{
     const [tab, setTab] = useState(0);
+    const [openNavigation, setOpenNavigation] = useState(false);
 
     const darkTheme = createTheme({
         palette: {
@@ -37,24 +38,19 @@ const Header = ({setTabIndex,isHomePage, setContent})=>{
             return document.getElementById("mySidenav").style.width = "250px";
         document.getElementById("mobileSearch-wrapper").style.display = "block";
         document.getElementById("search-container").classList.toggle("show-search");
-}
-
-/* Set the width of the side navigation to 0 */
-const closeNav = ()=> {
-  document.getElementById("mySidenav").style.width = "0";
-}
+    }
 
     return (
         <header>
-            <div id="mySidenav" className="sidenav">
+            {/* <div className="sidenav">
                 <Link to="/">Movies &amp; Series</Link>
                 <Link to="/people">People</Link>
                 <Link to="/favourites">Favourites</Link>
-                <button className="closebtn" onClick={closeNav}>&times;</button>
-              
-            </div>
+                <button className="closebtn" onClick={()=>setOpenNavigation(false)}>&times;</button>
+            </div> */}
+            <NavigationDrawer openNavigation={openNavigation} setOpenNavigation={setOpenNavigation} />
         
-            {(window.innerWidth>720 || isHomePage) && <span id="open" onClick={openNav} className=""><MenuIcon></MenuIcon></span>}
+            <span id="open" onClick={()=>setOpenNavigation(true)} className=""><MenuIcon></MenuIcon></span>
             <span className="first title">Movie</span>
             <span className="second title">App</span>
             {isHomePage && (
