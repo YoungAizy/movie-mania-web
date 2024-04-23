@@ -8,7 +8,7 @@ import People from './Pages/People.tsx';
 import Favourites from './Pages/Favourites.tsx'
 import PersonDetails from './components/PersonDetails.tsx';
 //Routes
-//import WelcomePage from './routes/WelcomePage.tsx';
+import PublicRoutes from './routes/PublicRoutes.tsx';
 import LandingPage from './routes/LandingPage.tsx'
 import RegistrationPage from './routes/Register.tsx'
 import Profile from './routes/Profile.tsx';
@@ -28,8 +28,10 @@ function App() {
           <ThemeProvider theme={AppTheme}>
             <div className="App">
             <Routes>
-                <Route path="/" element={<LandingPage/>} />
-                <Route path='/register' element={<RegistrationPage />} />
+                <Route element={<PublicRoutes/>}>
+                  <Route path="/" element={<LandingPage/>} />
+                  <Route path='/register' element={<RegistrationPage />} />
+                </Route>
                 <Route path="/home" element={<Shows/>} />
                 <Route path="/people" element={<People />} />
                 <Route path="/people/:id" element={<PersonDetails />} />
