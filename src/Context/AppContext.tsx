@@ -16,9 +16,9 @@ export interface ContextType {
 
 export const AppContext = createContext<ContextType | {}>({});
 const initialCollectionState = {
-    people: JSON.parse(sessionStorage.getItem("favePeople")),
-    tv: JSON.parse(sessionStorage.getItem("faveTv")),
-    movies: JSON.parse(sessionStorage.getItem("faveMovies")),
+    people: JSON.parse(sessionStorage.getItem("people"))||{},
+    tv: JSON.parse(sessionStorage.getItem("shows"))||{},
+    movies: JSON.parse(sessionStorage.getItem("movies"))||{},
 }
 const collectionReducer = (state, action)=>{
     switch(action.type){
