@@ -12,8 +12,10 @@ type props={
     passwrd2?: string,
     passwrd2Label?: string,
     setPasswrd2?: Function,
+    onEmailEnter?: Function
 }
-const AuthForm = ({e_mail,setEmail,passwrd, passwrdLabel, setPasswrd, passwrd2, passwrd2Label, setPasswrd2}: props) => {
+const AuthForm = ({e_mail,setEmail,passwrd, passwrdLabel, setPasswrd, passwrd2, passwrd2Label, setPasswrd2,
+    onEmailEnter}: props) => {
 
     return (
         <div className='flex-center-column' >
@@ -25,6 +27,7 @@ const AuthForm = ({e_mail,setEmail,passwrd, passwrdLabel, setPasswrd, passwrd2, 
                     }
                     })}>Email:</InputLabel>
                 <TextInput type='email' value={e_mail} onChange={e=>setEmail(e.target.value)} 
+                    onKeyDown={(e)=>{if(e.key === "Enter") onEmailEnter && onEmailEnter()}}
                     placeholder='JohnDoe@abc.com' variant='outlined' 
                     sx={theme=>({
                         [theme.breakpoints.down('sm')]:{
