@@ -23,7 +23,7 @@ const PersonContent = ({ id }) => {
         fetchPerson();
         fetchCredits();
         // eslint-disable-next-line 
-    },[])
+    },[id])
     return (
         <>
             
