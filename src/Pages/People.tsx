@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate }  from 'react-router-dom';
 import Header from '../components/Header.tsx'
 import axios from 'axios'
@@ -7,6 +7,8 @@ import { IconButton, Badge } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import '../styles/Card.scss'
 import CustomPagination from '../components/Pagination/CustomPagination.tsx';
+import useCollections from '../myhooks/useCollections.ts';
+import { AppContext } from '../Context/AppContext.tsx';
 
 export default function People() {
     const [page, setPage] = useState(1);
@@ -15,19 +17,39 @@ export default function People() {
     const [people, setPeople] = useState([])
     const [searchQuery, setSearchQuery] = useState("")
     const [searching, setSearching] = useState(false)
-    const savedFaves = JSON.parse(sessionStorage.getItem('peopleFaves')) || {};
+    const [savedFaves,setSavedFaves] = useState(JSON.parse(sessionStorage.getItem('people')) || {});
+    const collections = useCollections();
+    const {collection} = useContext(AppContext)
+    
+    useEffect(()=>{
+        const wait = async()=>{
+            const favored = await collection;
+            console.log('favored', favored);
+            setSavedFaves(favored.people)
+        }
+        wait();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[]);
 
     const saveFave = (e, newFave) => {
         if (savedFaves[newFave.id]) {
             // If the selected person is already favourited, remove them from favourite list
             delete savedFaves[newFave.id];
-            sessionStorage.setItem('peopleFaves', JSON.stringify(savedFaves));
+            sessionStorage.setItem('people', JSON.stringify(savedFaves));
             e.target.style.color = "black"
         } else {
-            // Add a new favourite person 
+            const store = (error=null)=>{
+                if(error){
+                    e.target.style.color = "black";
+                    return
+                }
+                // Add a new favourite person 
+                sessionStorage.setItem('people', JSON.stringify(savedFaves));
+            }
             savedFaves[newFave.id] = newFave;
-            sessionStorage.setItem('peopleFaves', JSON.stringify(savedFaves));
-            e.target.style.color = "rgb(235, 222, 47)"
+            e.target.style.color = "gold";
+            collections.save(savedFaves,'people',store);
+
         }     
     }
 
@@ -83,12 +105,9 @@ export default function People() {
 const FrontCard = ({ poster, name, department }) => {
     return (  
        <div className="card">
-        <Badge badgeContent={department} color="secondary" />
+        <Badge badgeContent={department} color={department.toLowerCase()==="acting" ?"primary":"secondary"} />
             <img src={poster ? `${img_300}${poster}`: unavailable}  alt='' className="poster"/>
             <h2>{name}</h2>
-            {/* <div className="card-footer">
-                <span className="span-dark">{department}</span>
-            </div> */}
         </div>
     )
 }
@@ -129,7 +148,7 @@ export const CardPerson = ({ person, saveFave, isFav, setClicked=()=>{}, faved }
                             <IconButton
                                 onClick={e=>saveFave(e, person)}
                                 style={{justifySelf:'end', padding:"8px"}}
-                                size="large"><StarIcon style={{color:`${faved[person.id] ? "rgb(235, 222, 47)":"black"}`}}/></IconButton>
+                                size="large"><StarIcon style={{color:`${faved[person.id] ? "gold":"black"}`}}/></IconButton>
                         </div>
                     </div>
                     </div>
