@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 import MyDialog from './styled/MyDialog.tsx';
 // import {FormControl, InputLabel,} from '@mui/material';
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from 'react-router-dom';
 import StyledBtn from './StyledBtn.tsx';
 import AuthForm from './AuthForm.tsx'
 import "../styles/signinModal.scss";
-import { auth } from '../config/firebase.ts';
+import useAuth from '../myhooks/useAuth.ts';
 
 const useStyles = {
       paper: {
@@ -24,6 +23,7 @@ const SigninModal = ({isOpen, setOpen, setProcessing}) => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const navigate = useNavigate()
+  const auth = useAuth()
   
   const regBtnClick = (e)=>{
     e.preventDefault();
@@ -34,13 +34,14 @@ const SigninModal = ({isOpen, setOpen, setProcessing}) => {
     e.preventDefault();
     setOpen(false)
     setProcessing(true);
-    setTimeout(()=> setProcessing(false),5000);
-    // try{
-    //   const {user}= await signInWithEmailAndPassword(auth,email,password);
-    //   console.log(user);
-    // }catch(error){
-    //   console.log(error);
-    // }
+    try{
+      const user = await auth.login(email, password);
+      user && navigate('/profile');
+    }catch(error){
+      console.log(error);
+      setProcessing(false);
+      alert("Couldn't sign you in. An error occured.");
+    }
   }
 
   return (

@@ -3,12 +3,14 @@ import './ContentModal.css'
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import axios from 'axios';
-import { img_500, unavailable, unavailableLandscape } from '../../config/config.ts';
-import { Button, IconButton } from '@mui/material';
+import { img_logo, img_500, unavailable, unavailableLandscape } from '../../config/config.ts';
+import { Badge, Button} from '@mui/material';
 import YouTubeIcon from '@mui/icons-material/YouTube';
-import StarIcon from '@mui/icons-material/Star';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { AppContext } from '../../Context/AppContext.tsx';
+import { isLoggedIn } from '../../myhooks/useAuth.ts';
+import StarBadge from '../StarBadge.tsx';
+import useCollections from '../../myhooks/useCollections.ts';
 
 const useStyles = {
     paper: {
@@ -34,11 +36,14 @@ type props ={
   isSearch?: boolean
 }
 
-export default function ContentModal({children, type, id, faves, stored, contentStyle, isSearch, title}:props) {
+export default function ContentModal({children, type, id, faves= {}, stored, contentStyle, isSearch, title}:props) {
   const classes = useStyles;
     const [open, setOpen] = useState(false);
     const [content, setContent] = useState(null);
-    const [video, setVideo] = useState('')
+    const [video, setVideo] = useState('');
+    const [streamProviders, setStreamProviders] = useState([]);
+
+    const loggedIn = isLoggedIn();
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const searchText = searchParams.get('search');
@@ -71,38 +76,61 @@ export default function ContentModal({children, type, id, faves, stored, content
         const { data } = await axios(`https://api.themoviedb.org/3/${type}/${id}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`);
         setVideo(data.results[0]?.key)
     }
+    const fetchStreamProviders = async ()=>{
+      const {data: {results}} = await axios(`https://api.themoviedb.org/3/${type}/${id}}/watch/providers?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&locale=US`);
+      console.log("Watch Providers:",results);
+      setStreamProviders(results.US?.flatrate);
+    }
     useEffect(() => {
         if(open){
           fetchData();
           fetchVideo();
+          fetchStreamProviders();
         }
         // eslint-disable-next-line 
     },[open])
+  const collections = useCollections();
+  const saveToStorage = (e, newFave,itemType) => {
 
-  const saveToStorage = (e, newFave) => {
-
-        if (faves.id) {
-            // If the selected person is already favourited, remove them from favourite list
+      e.target.style.color = "lightgoldenrodyellow";
+      if (faves[id]) {
+        // If the selected person is already favourited, remove them from favourite list
+        const cb =(error=null)=>{
+            if(error){
+              e.target.style.color = "gold";
+              return;
+            }
             delete faves[id];
             sessionStorage.setItem(newFave, JSON.stringify(faves))
             e.target.style.color = "black"
-
-        } else {
-            // Add a new favourite person 
-            faves[id] = content;
-            sessionStorage.setItem(newFave,JSON.stringify(faves))
-            e.target.style.color = "rgb(235, 222, 47)"
-        }     
+          }
+          collections.unSave(itemType+'/'+id,cb);
+      } else {
+        console.log('else entered',faves);
+          // Add a new favourite person
+          const data = {[id]:content};
+          faves[id] = data;
+          const updateStorage = (error=null)=>{
+            if(error) {
+              e.target.style.color = "black";
+              return;
+            }
+            sessionStorage.setItem(newFave,JSON.stringify(faves));
+            e.target.style.color = "gold";
+          }
+          collections.save(data,itemType,updateStorage);
+      }     
     }
 
   const saveFave = (e) => {
+    console.log("new fave", content)
     switch (type) {
       case 'movie':
-        saveToStorage(e, "faveMovies")
+        saveToStorage(e, "movies",'movies')
         break;
     
       case 'tv':
-        saveToStorage(e, 'faveShows')
+        saveToStorage(e, 'shows','shows')
         break;
       
       default:
@@ -130,7 +158,10 @@ export default function ContentModal({children, type, id, faves, stored, content
     >
       <Fade in={open}>
         <div style={classes.paper}>
-            { content &&  (<div className='ContentModal'>
+            { content &&  (<>
+                <Badge invisible={loggedIn} sx={{display:'initial'}}  anchorOrigin={{ vertical: 'top', horizontal: 'right',}}
+                badgeContent={<StarBadge faves={faves} saveFave={saveFave} id={id}/> } >
+              <div className='ContentModal'>
                         <img  src={content.poster_path ? `${img_500}${content.poster_path}` : unavailable} alt={content.name || content.title} className="ContentModal-portrait" />
                         <img src={content.backdrop_path ? `${img_500}${content.backdrop_path}` : unavailableLandscape} alt={content.name || content.title} className="ContentModal-landscape" />
                         <div className="ContentModal-about">
@@ -139,16 +170,16 @@ export default function ContentModal({children, type, id, faves, stored, content
                             {content.tagline && (<i className='tagline'>{content.tagline}</i>)}
                             <span className="ContentModal-description">{content.overview}</span>
                             <div style={{display:'flex', flexFlow: "row nowrap", justifyContent:'space-between'}}>
-                              
-                            <Button style={{width:'60%'}} size='medium' variant='contained' startIcon={<YouTubeIcon />} color='secondary' target='_blank' href={`https://www.youtube.com/watch?v=${video}`} >
-                                WatchThe Trailer
-                            </Button>
-                            {content && (<IconButton onClick={e => saveFave(e)} style={{ justifySelf: 'end' }} size="large">
-                              <StarIcon style={{ color: `${faves?.hasOwnProperty(id) ? "rgb(235, 222, 47)":'black'}`}}/>
-                            </IconButton>)}
+                              <div>
+                              {streamProviders && streamProviders.map(provider=>( 
+                                <img style={{marginRight:'12px'}} key={provider.provider_id} src={img_logo+provider.logo_path} alt={provider.provider_name} /> ))}
+                              </div>
+                              {video && <Button size='medium' variant='contained' startIcon={<YouTubeIcon />} color='secondary' target='_blank' href={`https://www.youtube.com/watch?v=${video}`} >
+                                  Trailer
+                              </Button>}
                             </div>
                         </div>
-              </div>)}
+              </div></Badge></>)}
         </div>
       </Fade>
     </Modal>

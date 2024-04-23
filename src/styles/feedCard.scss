@@ -5,7 +5,7 @@
     width: 300px;
     background-color: #708090c9;
     margin: 1rem auto;
-    border-radius: 1rem;
+    border-radius: 0 1rem;
 }
 
 .thumbnail{
@@ -21,7 +21,7 @@
     height: 100%;
     object-fit: cover;
     // border-radius: 0 1rem;
-    border-radius: 1rem;
+    border-radius: 0 1rem 1rem;
 }
 
 .feed-card-body{

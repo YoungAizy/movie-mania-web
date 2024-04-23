@@ -10,19 +10,19 @@ type props ={
   picture: any,
   setPicture: Function,
   age?: number,
-  setAge?: Function
+  setAge?: Function,
+  setMetadata?: Function
+  onKeyPress?: Function;
 }
 
-const UserForm = ({username,setUsername, picture, setPicture, age, setAge}:props) => {
+const UserForm = ({username,setUsername, picture, setPicture, age, setAge, setMetadata, onKeyPress}:props) => {
     const choosePicture = file=>{
-      console.log('file:', file.type)
-      const metadata = {
-        contentType: 'image/jpeg',
-      };
+      console.log('file:', file)
+      setMetadata && setMetadata('image/jpeg');
       const reader = new FileReader();
       reader.onload = e =>{
         console.log(e?.target);
-        setPicture(e?.target.result)
+        setPicture(e.target?.result);
       }
       reader.readAsDataURL(file);
     }
@@ -39,23 +39,29 @@ const UserForm = ({username,setUsername, picture, setPicture, age, setAge}:props
       <div style={{width:'100%', textAlign:'center'}}>
         <InputLabel htmlFor='username' sx={theme=>({
           textAlign:'start', 
-          marginLeft:'3.3rem',
-          [theme.breakpoints.down("sm")]:{
-            marginLeft:'1rem'
+          marginLeft:'12%',
+          [theme.breakpoints.down('sm')]:{
+              marginLeft: '4%'
           }
           })}>Username:</InputLabel>
         <TextInput id="username" type='text' value = {username}
-          onChange={e=>setUsername(e.target.value)}
+          onChange={e=>setUsername(e.target.value)} onKeyDown={(e)=>{if(e.key === "Enter"){console.log("enter key pressed"); onKeyPress && onKeyPress()}}}
           variant="outlined" />
 
       </div>
       {age && 
-      <>
-        <label htmlFor="age">Age:</label>
+      <div style={{width:'100%', textAlign:'center'}}>
+         <InputLabel htmlFor='age' sx={theme=>({
+          textAlign:'start', 
+          marginLeft:'12%',
+          [theme.breakpoints.down('sm')]:{
+              marginLeft: '4%'
+          }
+          })}>Age:</InputLabel>
         <TextInput id="age" type='number' value = {age}
           onChange={e=>setAge(e.target.value)}
-          variant="outlined" />
-      </>}
+          variant="outlined" inputProps={{min:13,max:65}} />
+      </div>}
     </div>
   )
 }

@@ -3,11 +3,10 @@ import React, {useContext, useRef, useState} from "react";
 import NavBar from "../components/NavBar.tsx";
 import { Container } from "@mui/material";
 import SearchField from '../components/SearchField.tsx'
-// import SigninModal from "../components/SigninModal.tsx";
 import StyledBtn from "../components/StyledBtn.tsx";
 import { ArrowForward } from "@mui/icons-material";
 import "../styles/welcomePage.scss"
-import Carditems from "../components/Carditems.tsx";
+import CardItems from "../components/CardItems.tsx";
 import useSearch from "../myhooks/useSearch.ts";
 import { useSearchParams } from "react-router-dom";
 import { AppContext } from "../Context/AppContext.tsx";
@@ -19,8 +18,8 @@ export default function WelcomePage(){
     const [searchText, setSearchText] = useState("");
     const firstClick = useRef(true);
     const [searchParams, setSearchParams] = useSearchParams();
-    const open = searchParams.get("signin") 
-    const [dialogOpen,setDialogOpen] = useState(open ? open:false);
+    const open = searchParams.get("signin")
+    const [dialogOpen,setDialogOpen] = useState(open ? Boolean(open):false);
     const search = useSearch();
     const {setSearchContent} = useContext(AppContext)
     
@@ -89,11 +88,10 @@ export default function WelcomePage(){
                 <div className="landing-search-content">
                     {!isLoading && <h3 style={{textAlign:"center", marginTop:12}}>{searchText}</h3>}
                     <div id="card-list-wrapper">
-                        <Carditems loading={isLoading} data={content} faves={null} type={type} is_Search={true}/>
+                        <CardItems loading={isLoading} data={content} faves={null} type={type} is_Search={true}/>
                     </div>
                 </div>
             </div>
-            {/* <SigninModal isOpen={dialogOpen} setOpen={setDialogOpen} /> */}
         </main>
         </NavBar>
         </div>

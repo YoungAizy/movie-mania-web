@@ -16,10 +16,10 @@ const Genres = ({ type, genres, setGenres, selectedGenres, setselectedGenres, se
     useEffect(() => {
         const fetchGenres = async () => {
             const {data} = await axios(`https://api.themoviedb.org/3/genre/${type}/list?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`);
-            setGenres(data.genres)
+            setGenres(data.genres.filter(item => !selectedGenres.some(({id}) => id ===item.id)))
         }
 
-        fetchGenres();
+        if(type) fetchGenres();
         
     },[type,setGenres])
 
@@ -34,7 +34,7 @@ const Genres = ({ type, genres, setGenres, selectedGenres, setselectedGenres, se
     return (
         <div style={{ margin: ".6rem 0" }}>
             {selectedGenres && selectedGenres.map(item => ( 
-                <Chip key={item.id} sx={{ margin: ".3rem" }} label={item.name} size='small' clickable color={selectedColor} onDelete={()=>unSelected(item)} />)
+                <Chip key={item.id} sx={{ margin: ".3rem" }} label={item.name} size='small' clickable color={selectedColor} onDelete={()=>type && unSelected(item)} />)
             )}
             {genres && genres.map(item => ( 
                 <Chip key={item.id} sx={{ margin: ".3rem", color: 'white' }} label={item.name} size='small' clickable onClick={()=>onSelected(item)} />)

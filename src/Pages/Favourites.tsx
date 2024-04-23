@@ -4,16 +4,16 @@ import Header from '../components/Header.tsx'
 import PersonContent  from '../components/PersonContent.tsx';
 import { img_300, unavailable } from '../config/config.ts';
 import { CardPerson } from './People.tsx';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack.d.ts';
+import { ArrowBack as ArrowBackIcon} from "@mui/icons-material";
 
 export default function Favourites() {
     const [movies, setMovies] = useState([]);
     const [shows, setShows] = useState([]);
     const [people, setPeople] = useState([]);
     const [personClicked, setPersonClicked] = useState();
-    const a = useMemo(()=>JSON.parse(sessionStorage.getItem('faveShows')) || {},[]);
-    const b = useMemo(()=>JSON.parse(sessionStorage.getItem('faveMovies'))|| {},[]);
-    const c = useMemo(()=>JSON.parse(sessionStorage.getItem('peopleFaves'))||{},[]);
+    const a = useMemo(()=>JSON.parse(sessionStorage.getItem('shows')) || {},[]);
+    const b = useMemo(()=>JSON.parse(sessionStorage.getItem('movies'))|| {},[]);
+    const c = useMemo(()=>JSON.parse(sessionStorage.getItem('people'))||{},[]);
 
     useEffect(() => {
         a && setShows(Object.values(a));
@@ -23,7 +23,7 @@ export default function Favourites() {
     
     const removeFave = (element, faves) => {
         delete c[faves.id];
-        sessionStorage.setItem('peopleFaves', JSON.stringify(c));
+        sessionStorage.setItem('people', JSON.stringify(c));
         element.target.style.color = "black"
     }
 
@@ -33,14 +33,13 @@ export default function Favourites() {
             <div className="favourites-wrapper">
                 <div className="people-section">
                     <h1 id="peopleHeader" className="headers">
-                        {personClicked ? <button style={btnStyle} onClick={()=>setPersonClicked(null)}><ArrowBackIcon /></button> : "People"}
+                        {personClicked ? <button style={btnStyle} onClick={()=>setPersonClicked(null)}>
+                            <ArrowBackIcon /><span style={{verticalAlign: 'super', fontSize: 'large'}}> Back</span></button> : "People"}
                     </h1>
                     <div className='people-container' style={{height: `${people.length===0 && "auto"}`}}>
                         {people.length>0 ? people.map(person =>
                             (<div key={person.id} ><CardPerson person={person} saveFave={removeFave} faved={c} isFav={true} setClicked={setPersonClicked} /></div>)) :
-                            (  <div style={{width:"100%"}}>
-            <h4 style={{textAlign:"center"}}>No Content.</h4>
-        </div>)}
+                            <h2 style={{textAlign:"center", width:"100%", color:"gray"}}>No Favourites Set Yet.</h2>}
                     </div>
                 </div>
                 <div className="shows-favs">
@@ -49,13 +48,13 @@ export default function Favourites() {
                             <h1 className="headers" style={{marginTop:"0"}}>Movies</h1>
                             <div className="faves-container">
                                 {movies.length>0 ? movies.map(movie => (
-                                    <FavouriteItem key={movie.id} poster={movie.poster_path} content={movie} type="movie" faves={b} />
+                                    <FavouriteItem title={movie.title} key={movie.id} poster={movie.poster_path} content={movie} type="movie" faves={b} />
                                 )): <h2 style={{textAlign:"center", width:"100%", color:"gray"}}>No Favourites Set Yet.</h2>}
                             </div>
                             <h1 className="headers">Shows</h1>
                             <div className="faves-container">
                                 {shows.length>0 ? shows.map(show => (
-                                    <FavouriteItem key={show.id} poster={show.poster_path} content={show} type="tv" faves={a} />
+                                    <FavouriteItem title={show.name} key={show.id} poster={show.poster_path} content={show} type="tv" faves={a} />
                                 )): <h2 style={{textAlign:"center", width:"100%", color:"gray"}}>No Favourites Set Yet.</h2>}
                             </div>
                         </div>
@@ -67,13 +66,13 @@ export default function Favourites() {
     )
 }
 
-const FavouriteItem = ({ poster, content, type, faves }) => {
+const FavouriteItem = ({ poster, content, type, faves, title }) => {
     
     return (
-        <ContentModal id={content.id} type={type} faves={faves} stored={content} contentStyle="fav-card">
+        <ContentModal title={title} id={content.id} type={type} faves={faves} stored={content} contentStyle="fav-card">
             <img style={{height:"100%"}} src={poster ? `${img_300}${poster}`: unavailable} alt="" />
         </ContentModal>
     )
 }
 
-const btnStyle = { cursor: "pointer", border: "none", background:"inherit", padding:"4px 12px" }
+const btnStyle = { cursor: "pointer", border: "none", background:"inherit", padding:"4px 12px", color: 'white' }
