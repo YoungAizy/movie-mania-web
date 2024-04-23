@@ -16,7 +16,7 @@ const Genres = ({ type, genres, setGenres, selectedGenres, setselectedGenres, se
     useEffect(() => {
         const fetchGenres = async () => {
             const {data} = await axios(`https://api.themoviedb.org/3/genre/${type}/list?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`);
-            setGenres(data.genres)
+            setGenres(data.genres.filter(item => !selectedGenres.some(({id}) => id ===item.id)))
         }
 
         if(type) fetchGenres();
