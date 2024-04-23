@@ -13,18 +13,25 @@ const HorizontalTimeline = ({ content, credits }) => {
         },50);
         return id;
     }
-    let scrollerID = scroll(); 
-    const stop = () => clearInterval(scrollerID)
+    let scrollerID = useRef(null); 
+    const stop = () => clearInterval(scrollerID.current)
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    useEffect(()=>stop,[]);
-    const toggleScrollState = (e)=>{
-        e.stopPropagation();
+    useEffect(()=>{
+        if(!scrollPaused.current){
+            console.log("Entered if statement")
+            stop();
+            scrollerID.current = scroll();
+        }
+        return stop
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[content]);
+    const toggleScrollState = ()=>{
+
         if(!scrollPaused.current){
             console.log("Entered if statement")
             stop();
         }else{
-            scrollerID = scroll();
+            scrollerID.current = scroll();
         }
         scrollPaused.current = !scrollPaused.current;
     }
