@@ -9,7 +9,7 @@ const ProgressOverlay = ({open,authText}) => {
       onClick={()=>{}}
       >
       <Stack sx={{ width: '65%', color:"lightgray", letterSacing:'1px', textTransform:"uppercase", marginBottom: '14px' }} spacing={4}>
-        <h3 style={{textAlign:"center"}} >{authText}</h3>
+        <h3 style={{textAlign:"center", letterSpacing: '1px'}} >{authText}</h3>
         <LinearProgress />
       </Stack>
     </Backdrop>
