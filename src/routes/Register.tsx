@@ -78,6 +78,10 @@ const Register = ()=>{
             alert("Passwords must match!");
             return;
         }
+        if(age<13 || age>65){
+            alert("Age must fall between the range of 13 to 65");
+            return
+        }
         setTemp({email,password});
         console.log('hello');
         worker.postMessage({username, password,email,picture, metadata})
