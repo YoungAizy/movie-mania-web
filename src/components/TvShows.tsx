@@ -8,7 +8,7 @@ const TvShows = ({ urlGenres, content, setContent  }) => {
     const [page, setPage] = useState(1);
     const [numofPages, setNumOfPages] = useState();
     const [isLoading, setIsLoading] = useState(true);
-    const [favoredShows,setFavoredShows] = JSON.parse(sessionStorage.getItem('shows')) || {};
+    const [favoredShows,setFavoredShows] = useState(JSON.parse(sessionStorage.getItem('shows')) || {});
     const {collection} = useContext(AppContext)
     
     useEffect(()=>{
