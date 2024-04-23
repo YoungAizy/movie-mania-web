@@ -39,9 +39,9 @@ const UserForm = ({username,setUsername, picture, setPicture, age, setAge, setMe
       <div style={{width:'100%', textAlign:'center'}}>
         <InputLabel htmlFor='username' sx={theme=>({
           textAlign:'start', 
-          marginLeft:'3.3rem',
-          [theme.breakpoints.down("sm")]:{
-            marginLeft:'1rem'
+          marginLeft:'12%',
+          [theme.breakpoints.down('sm')]:{
+              marginLeft: '4%'
           }
           })}>Username:</InputLabel>
         <TextInput id="username" type='text' value = {username}
@@ -50,12 +50,18 @@ const UserForm = ({username,setUsername, picture, setPicture, age, setAge, setMe
 
       </div>
       {age && 
-      <>
-        <label htmlFor="age">Age:</label>
+      <div style={{width:'100%', textAlign:'center'}}>
+         <InputLabel htmlFor='age' sx={theme=>({
+          textAlign:'start', 
+          marginLeft:'12%',
+          [theme.breakpoints.down('sm')]:{
+              marginLeft: '4%'
+          }
+          })}>Age:</InputLabel>
         <TextInput id="age" type='number' value = {age}
           onChange={e=>setAge(e.target.value)}
-          variant="outlined" />
-      </>}
+          variant="outlined" inputProps={{min:13,max:65}} />
+      </div>}
     </div>
   )
 }
