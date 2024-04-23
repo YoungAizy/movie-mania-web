@@ -5,7 +5,13 @@ import TextInput from './styled/TextInput.tsx'
 import StyledBtn from './StyledBtn.tsx'
 import '../styles/navigationDrawer.scss'
 
-const NavigationDrawer = ({openNavigation,setOpenNavigation}) => {
+type PropsType={
+  openNavigation: boolean;
+  setOpenNavigation: React.Dispatch<React.SetStateAction<boolean>>;
+  isHomePage?: boolean;
+}
+
+const NavigationDrawer = ({openNavigation,setOpenNavigation, isHomePage}:PropsType) => {
 
   const logout = ()=>{}
   
@@ -16,15 +22,18 @@ const NavigationDrawer = ({openNavigation,setOpenNavigation}) => {
         overflowX: "hidden",
         padding: "60px 12px 16px",
         width: '250px'
-      }
+      },
     }}>
         <button className="closebtn" onClick={()=>setOpenNavigation(false)}>&times;</button>
         <div style={{display:"flex", justifyContent:"center", margin:'2vh 0'}}>
-          <TextInput value={""} sx={{
+          {isHomePage && <TextInput value={""} sx={theme=>({
             '.MuiOutlinedInput-input':{
               padding: '8.5px 14px'
+            },
+            [theme.breakpoints.up('md')]:{
+              display: 'none'
             }
-          }} />
+          })} />}
         </div>
         <Link to="/home">Movies &amp; Series</Link>
         <Link to="/people">People</Link>
