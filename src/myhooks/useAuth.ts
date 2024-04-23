@@ -4,7 +4,7 @@ import { auth } from "../config/firebase.ts"
 import { AuthContext } from "../Context/AuthContext.tsx"
 
 export const isLoggedIn = ()=>{
-    const loggedIn = JSON.parse(localStorage.getItem('auth'))?.loggedIn;
+    const loggedIn = JSON.parse(localStorage.getItem('user'))?.loggedIn;
     return loggedIn;
 }
 
@@ -31,7 +31,7 @@ const useAuth = () => {
         }
         localStorage.setItem('user', JSON.stringify(userObj));
         setUser(userObj);
-        setLoggedIn(userObj.loggedIn);
+        user && setLoggedIn(userObj.loggedIn);
         return user;
     }
     return {register, login};
