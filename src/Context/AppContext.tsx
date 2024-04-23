@@ -33,7 +33,7 @@ const collectionReducer = (state, action)=>{
             delete copiedStateField[action.id]
             return{
                 ...state, [action.collectionField]: copiedStateField 
-            };;
+            };
         default:
             return state;
         }
@@ -46,15 +46,19 @@ export const AppContextProvider = ({children})=>{
     const publicCollection = useCollections();
     const collectionInit = async(state)=>{
         console.log("hello kitty!")
-       if(!sessionStorage.getItem("faveMovies") && !sessionStorage.getItem("faveTv") && !sessionStorage.getItem("favePeople")){
+       if(!sessionStorage.getItem("movies") && !sessionStorage.getItem("shows") && !sessionStorage.getItem("people")){
             console.log("something collection")
             const result = await publicCollection.getCollection();
             console.log('App Context', result);
-            return{
+            const faves = {
                 people: result?.people || {},
                 tv: result?.shows || {},
                 movie: result?.movies || {} 
             }
+            sessionStorage.setItem('people', JSON.stringify(faves.people));
+            sessionStorage.setItem('shows', JSON.stringify(faves.tv));
+            sessionStorage.setItem('movies', JSON.stringify(faves.movie));
+            return faves;
        }else
         return state;
     }
