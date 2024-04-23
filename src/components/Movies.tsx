@@ -1,20 +1,39 @@
-import React, { useEffect, useState  } from 'react'
+import React, { useContext, useEffect, useState  } from 'react'
 import axios from 'axios';
-import CardItem from './CardItem.tsx'
+import CardItems from './CardItems.tsx'
 import CustomPagination from './Pagination/CustomPagination.tsx';
+import { AppContext } from '../Context/AppContext.tsx';
 
 const Movies = ({urlGenres, content, setContent }) => {
+    const {collection} = useContext(AppContext);
     const [page, setPage] = useState(1);
     const [numofPages, setNumOfPages] = useState();
-    const favMovies = JSON.parse(sessionStorage.getItem("faveMovies")) || {};
+    const [isLoading, setIsLoading] = useState(true);
+    const [favoredMovies, setFavoredMovies] = useState(JSON.parse(sessionStorage.getItem("movies")) || {});
     
+    useEffect(()=>{
+        const wait = async()=>{
+            const favored = await collection;
+            console.log('favored', favored);
+            setFavoredMovies(favored.movie)
+        }
+        wait();
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+    },[collection]);
     useEffect(() => {
         const fetch = async () => {
-            const { data } =
-                await axios(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=true&page=${page}&with_genres=${urlGenres}`);
-                console.log("data", data);
-            setContent(data.results);
-            setNumOfPages(data.total_pages);
+            try{
+                const { data } =
+                    await axios(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=true&page=${page}&with_genres=${urlGenres}`);
+                    console.log("data", data);
+                setContent(data.results);
+                setNumOfPages(data.total_pages);
+                data && setIsLoading(false);
+            }catch(error){
+                console.log(error.message);
+                console.log("ERROR:", error);
+                setIsLoading(false)
+            }
         }
 
     fetch()
@@ -22,16 +41,12 @@ const Movies = ({urlGenres, content, setContent }) => {
     },[page,urlGenres,setContent]);
     return (
         <div className="container">
-            {content && content.map(e => (
-                <CardItem
-                key={e.id} id={e.id} poster={e.poster_path} title={e.title || e.name}
-                    summary={e.overview}
+                <CardItems
+                    data={content}
                     type="movie"
-                    release_date={e.release_date}
-                    rating={e.vote_average}
-                    faves={favMovies}
-                />)
-            )}
+                    loading={isLoading}
+                    faves={favoredMovies}
+                />
             <CustomPagination numofPages={numofPages} setPage={setPage }/>
         </div>
     )
