@@ -92,28 +92,34 @@ export default function ContentModal({children, type, id, faves= {}, stored, con
   const collections = useCollections();
   const saveToStorage = (e, newFave,itemType) => {
 
-        if (faves.id) {
-            // If the selected person is already favourited, remove them from favourite list
+      e.target.style.color = "lightgoldenrodyellow";
+      if (faves[id]) {
+        // If the selected person is already favourited, remove them from favourite list
+        const cb =(error=null)=>{
+            if(error){
+              e.target.style.color = "gold";
+              return;
+            }
             delete faves[id];
             sessionStorage.setItem(newFave, JSON.stringify(faves))
             e.target.style.color = "black"
-
-        } else {
-            // Add a new favourite person
-            const data = {[id]:content};
-            faves[id] = data;
-            console.log("faves", faves);
-            const updateStorage = (error=null)=>{
-              if(error) {
-                e.target.style.color = "black";
-                return;
-              }
-              sessionStorage.setItem(newFave,JSON.stringify(faves));
-              e.target.style.color = "gold";
+          }
+          collections.unSave(itemType+'/'+id,cb);
+      } else {
+        console.log('else entered',faves);
+          // Add a new favourite person
+          const data = {[id]:content};
+          faves[id] = data;
+          const updateStorage = (error=null)=>{
+            if(error) {
+              e.target.style.color = "black";
+              return;
             }
-            collections.save(data,itemType,updateStorage);
-            e.target.style.color = "lightgoldenrodyellow";
-        }     
+            sessionStorage.setItem(newFave,JSON.stringify(faves));
+            e.target.style.color = "gold";
+          }
+          collections.save(data,itemType,updateStorage);
+      }     
     }
 
   const saveFave = (e) => {
@@ -171,10 +177,6 @@ export default function ContentModal({children, type, id, faves= {}, stored, con
                               {video && <Button size='medium' variant='contained' startIcon={<YouTubeIcon />} color='secondary' target='_blank' href={`https://www.youtube.com/watch?v=${video}`} >
                                   Trailer
                               </Button>}
-                              
-                              {/* {content && (<IconButton onClick={e => saveFave(e)} style={{ justifySelf: 'end' }} size="large">
-                                <StarIcon style={{ color: `${faves?.hasOwnProperty(id) ? "rgb(235, 222, 47)":'black'}`}}/>
-                              </IconButton>)} */}
                             </div>
                         </div>
               </div></Badge></>)}

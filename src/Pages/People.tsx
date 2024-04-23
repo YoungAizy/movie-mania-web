@@ -29,14 +29,21 @@ export default function People() {
         }
         wait();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[]);
+    },[collection]);
 
     const saveFave = (e, newFave) => {
         if (savedFaves[newFave.id]) {
-            // If the selected person is already favourited, remove them from favourite list
-            delete savedFaves[newFave.id];
-            sessionStorage.setItem('people', JSON.stringify(savedFaves));
+            const cb = (error=null)=>{
+                if(error){
+                    e.target.style.color = "gold";
+                    return;
+                }
+                // If the selected person is already favourited, remove them from favourite list
+                delete savedFaves[newFave.id];
+                sessionStorage.setItem('people', JSON.stringify(savedFaves));
+            }
             e.target.style.color = "black"
+            collections.unSave('people/'+newFave.id,cb);
         } else {
             const store = (error=null)=>{
                 if(error){
@@ -116,18 +123,14 @@ type cardPropTypes={
     saveFave: Function,
     faved: any[],
     isFav?: boolean,
-    setClicked: Function,
+    setClicked?: Function,
 }
-export const CardPerson = ({ person, saveFave, isFav, setClicked=()=>{}, faved }:cardPropTypes) => {
+export const CardPerson = ({ person, saveFave, isFav, setClicked, faved }:cardPropTypes) => {
     let navigate = useNavigate();
+    console.log("faved",faved)
 
     const getPersonInfo = (id) => {
-        console.log(id)
-        if (isFav) {
-            setClicked(id)
-        } else {
-            navigate(`/people/${id}`)
-        }
+        navigate(`/people/${id}`)
     }
 
         return (

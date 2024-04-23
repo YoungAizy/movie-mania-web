@@ -1,4 +1,4 @@
-import { get, onValue, query, ref, update } from 'firebase/database'
+import { get, onValue, query, ref, remove, update } from 'firebase/database'
 import { useContext } from 'react'
 import { db } from '../config/firebase.ts'
 import { AuthContext } from '../Context/AuthContext.tsx'
@@ -21,7 +21,17 @@ const useCollections = () => {
             cb(error);
         });
     }
-    const unSave = (data, itemType:string , cb:Function, collection = "public")=>{}
+    const unSave = ( fieldPath:string , cb:Function, collection = "public")=>{
+        remove(ref(db,path+collection+"/"+fieldPath))
+        .then(()=>{
+            console.log('removed...');
+            cb();
+        })
+        .catch(error=>{
+            console.log("Error deleting field from database:", error);
+            cb(error);
+        });
+    }
     const getAll = ()=>{
         onValue(ref(db,path+'_names'), snapshot =>{
             if(snapshot.exists()){
