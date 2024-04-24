@@ -13,10 +13,18 @@ interface Props{
     rating: number;
     faves: any;
     type: string;
+    genres?: [];
     isSearch?: boolean;
     id: number;
 }
 const CardItem = (props: Props) => {
+    // const mapGenres = (genres)=>{
+    //     const isSciFi =(genre)=> genre.toLowerCase() === "science fiction" ? "Sci-Fi": genre.name;
+    //     const gen1 = genres[0] ? (isSciFi(genres[0].name)):'';
+    //     const gen2 = genres[1] ? (isSciFi(genres[1].name)):'';
+
+    //     return gen1 +' | '+ gen2;
+    // }
     return (
         <ContentModal contentStyle="card" type={props.type} id={props.id} title={props.title} faves={props.faves} isSearch={props.isSearch}>
             {props.rating && (<Badge badgeContent={props.rating} color={props.rating>6 ? 'primary':'secondary'} />)}
