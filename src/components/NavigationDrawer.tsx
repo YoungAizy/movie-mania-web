@@ -1,6 +1,6 @@
 import { Drawer } from '@mui/material'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import TextInput from './styled/TextInput.tsx'
 import StyledBtn from './StyledBtn.tsx'
 import '../styles/navigationDrawer.scss'
@@ -12,8 +12,12 @@ type PropsType={
 }
 
 const NavigationDrawer = ({openNavigation,setOpenNavigation, isHomePage}:PropsType) => {
-
-  const logout = ()=>{}
+  const navigate = useNavigate()
+  const logout = ()=>{
+    localStorage.clear();
+    sessionStorage.clear();
+    navigate('/');
+  }
   
   return (
     <Drawer className="sidenav" anchor='left' open={openNavigation} onClose={()=>setOpenNavigation(false)} sx={{
