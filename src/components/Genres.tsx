@@ -21,6 +21,7 @@ const Genres = ({ type, genres, setGenres, selectedGenres, setselectedGenres, se
 
         if(type) fetchGenres();
         
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[type,setGenres])
 
     const onSelected = (genre) => {
