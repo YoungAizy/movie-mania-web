@@ -169,12 +169,13 @@ export default function ContentModal({children, type, id, faves= {}, stored, con
                                 {title} ({(content.first_air_date || content.release_date || '....').substring(0, 4)})</span>
                             {content.tagline && (<i className='tagline'>{content.tagline}</i>)}
                             <span className="ContentModal-description">{content.overview}</span>
-                            <div style={{display:'flex', flexFlow: "row nowrap", justifyContent:'space-between'}}>
+                            <div className='about-footer'>
                               <div>
                               {streamProviders && streamProviders.map(provider=>( 
                                 <img style={{marginRight:'12px'}} key={provider.provider_id} src={img_logo+provider.logo_path} alt={provider.provider_name} /> ))}
                               </div>
-                              {video && <Button size='medium' variant='contained' startIcon={<YouTubeIcon />} color='secondary' target='_blank' href={`https://www.youtube.com/watch?v=${video}`} >
+                              {video && 
+                              <Button size='medium' sx={{height:'fit-content'}} variant='contained' startIcon={<YouTubeIcon />} color='secondary' target='_blank' href={`https://www.youtube.com/watch?v=${video}`} >
                                   Trailer
                               </Button>}
                             </div>
