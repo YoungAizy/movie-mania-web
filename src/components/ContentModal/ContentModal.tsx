@@ -44,6 +44,7 @@ export default function ContentModal({children, type, id, faves= {}, stored, con
     const [streamProviders, setStreamProviders] = useState([]);
 
     const loggedIn = isLoggedIn();
+    console.log('logedIn',loggedIn)
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const searchText = searchParams.get('search');
@@ -159,7 +160,7 @@ export default function ContentModal({children, type, id, faves= {}, stored, con
       <Fade in={open}>
         <div style={classes.paper}>
             { content &&  (<>
-                <Badge invisible={loggedIn} sx={{display:'initial'}}  anchorOrigin={{ vertical: 'top', horizontal: 'right',}}
+                <Badge invisible={!loggedIn} sx={{display:'initial'}}  anchorOrigin={{ vertical: 'top', horizontal: 'right',}}
                 badgeContent={<StarBadge faves={faves} saveFave={saveFave} id={id}/> } >
               <div className='ContentModal'>
                         <img  src={content.poster_path ? `${img_500}${content.poster_path}` : unavailable} alt={content.name || content.title} className="ContentModal-portrait" />
