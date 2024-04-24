@@ -10,6 +10,7 @@ import CardItems from "../components/CardItems.tsx";
 import useSearch from "../myhooks/useSearch.ts";
 import { useSearchParams } from "react-router-dom";
 import { AppContext } from "../Context/AppContext.tsx";
+import TypeSelect from "../components/TypeSelect.tsx";
 
 export default function WelcomePage(){
     const [type,setType] = useState('movie');
@@ -79,7 +80,7 @@ export default function WelcomePage(){
                     {WELCOME_TEXT}
                 </div>
                   <div id="search-wrapper" className="search-wrapper1">
-                    <SearchField type={type} setType={setType} searchText={searchText} setSearchText={setSearchText} />
+                    <SearchField adornment={<TypeSelect type={type} setType={setType} />}  searchText={searchText} setSearchText={setSearchText} />
                     <StyledBtn sx={{margin:".5rem"}} onClick={searchBtnClick} ><ArrowForward /></StyledBtn>
                   </div>
             </Container>
