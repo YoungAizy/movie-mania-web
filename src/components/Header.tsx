@@ -33,21 +33,15 @@ const Header = ({setTabIndex,isHomePage, setContent})=>{
         setTab(index)
     }
 
-    const openNav = () => {
-        if (window.innerWidth > 720)
-            return document.getElementById("mySidenav").style.width = "250px";
-        document.getElementById("mobileSearch-wrapper").style.display = "block";
-        document.getElementById("search-container").classList.toggle("show-search");
-    }
+    // const openNav = () => {
+    //     if (window.innerWidth > 720)
+    //         return document.getElementById("mySidenav").style.width = "250px";
+    //     document.getElementById("mobileSearch-wrapper").style.display = "block";
+    //     document.getElementById("search-container").classList.toggle("show-search");
+    // }
 
     return (
         <header>
-            {/* <div className="sidenav">
-                <Link to="/">Movies &amp; Series</Link>
-                <Link to="/people">People</Link>
-                <Link to="/favourites">Favourites</Link>
-                <button className="closebtn" onClick={()=>setOpenNavigation(false)}>&times;</button>
-            </div> */}
             <NavigationDrawer openNavigation={openNavigation} setOpenNavigation={setOpenNavigation} />
         
             <span id="open" onClick={()=>setOpenNavigation(true)} className=""><MenuIcon></MenuIcon></span>
