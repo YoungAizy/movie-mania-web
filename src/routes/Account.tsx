@@ -26,7 +26,7 @@ const Account = ()=>{
     const [open,setOpen] = useState(false)
     const [processing,setProcessing] = useState(false)
 
-    const {user, setUser} = useContext(AuthContext);
+    const {user} = useContext(AuthContext);
 
     const navigate = useNavigate();
     const getWatchList = useWatchList();
@@ -42,7 +42,6 @@ const Account = ()=>{
     const [promptText, setPromptText] = useState("");
     const [reject, setReject] = useState<React.Dispatch<any>|null>(null);
     const [accept, setAccept] = useState<Function|null>(null);
-    const [verificationCode, setVerificationCode] = useState<string|null>(null);
 
     //Privacy Settings
     /**Public profile: boolean, automatically publicize collections: boolean, 
