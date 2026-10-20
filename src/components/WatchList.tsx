@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import {set, ref} from 'firebase/database';
 import {db} from '../config/firebase.ts';
 import { AuthContext } from '../Context/AuthContext.tsx';
-import useUpdate from '../myhooks/useUpdate.ts';
+import useProfileUpdate from '../myhooks/useProfileUpdate.ts';
 
 type propsType ={
   open: boolean;
@@ -23,9 +23,8 @@ const WatchList = ({open,setOpen,setProcessing, watchList, isUpdate}: propsType)
     const [selectedTvGenres, setselectedTvGenres] = useState([]);
 
     const {user} = useContext(AuthContext);
-
     const navigate = useNavigate();
-    const update = useUpdate()
+    const update = useProfileUpdate()
     useEffect(()=>{
       setselectedGenres(watchList?.movies || []);
       setselectedTvGenres(watchList?.television || []);
@@ -34,20 +33,19 @@ const WatchList = ({open,setOpen,setProcessing, watchList, isUpdate}: propsType)
     const saveWatchList = (e)=>{
       e.preventDefault();
       const userId = user.uid;
-      console.log('watchList', userId)
       if(!isUpdate){ 
-        console.log('new batch')
         set(ref(db, 'users/' + userId), {
           movies: selectedGenres,
           television: selectedTvGenres,
-        }).then(()=> navigate('/profile')).catch(error=> console.log('watchlist error:', error));
+        }).then(()=> navigate('/profile'))
+        .catch(error=> {
+          setProcessing(false);
+        });
       }else{
-        console.log('else')
         if(
           (JSON.stringify(selectedGenres) !== JSON.stringify(watchList?.movies)) || 
           (JSON.stringify(selectedTvGenres) !== JSON.stringify(watchList?.television)))
         {
-          console.log('oops!')
           update.watchList({movies: selectedGenres, television: selectedTvGenres}, setProcessing);
         }
       }

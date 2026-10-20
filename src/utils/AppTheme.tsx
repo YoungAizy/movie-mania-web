@@ -8,7 +8,7 @@ declare module '@mui/material/styles' {
   
     interface PaletteOptions {
       accent?: PaletteOptions['primary'];
-      backgground: Palette['primary'];
+      backgground: PaletteOptions['primary'];
     }
   }
 
@@ -28,6 +28,9 @@ const theme = createTheme({
             main: "#282c34",
             light: "#474e5d",
             dark: "rgb(20, 20, 34)"
+        },
+        success:{
+            main: "#32CD32"
         }
     },
 

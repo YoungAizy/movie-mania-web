@@ -17,11 +17,9 @@ type props ={
 
 const UserForm = ({username,setUsername, picture, setPicture, age, setAge, setMetadata, onKeyPress}:props) => {
     const choosePicture = file=>{
-      console.log('file:', file)
       setMetadata && setMetadata('image/jpeg');
       const reader = new FileReader();
       reader.onload = e =>{
-        console.log(e?.target);
         setPicture(e.target?.result);
       }
       reader.readAsDataURL(file);
@@ -45,7 +43,7 @@ const UserForm = ({username,setUsername, picture, setPicture, age, setAge, setMe
           }
           })}>Username:</InputLabel>
         <TextInput id="username" type='text' value = {username}
-          onChange={e=>setUsername(e.target.value)} onKeyDown={(e)=>{if(e.key === "Enter"){console.log("enter key pressed"); onKeyPress && onKeyPress()}}}
+          onChange={e=>setUsername(e.target.value)} onKeyDown={(e)=>{if(e.key === "Enter"){ onKeyPress && onKeyPress()}}}
           variant="outlined" />
 
       </div>

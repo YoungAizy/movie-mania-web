@@ -5,7 +5,6 @@ import { AuthContext } from '../Context/AuthContext.tsx';
 const ProtectedRoutes = () => {
   const {loggedIn, temp} = useContext(AuthContext);
   const isAuthenticated = loggedIn || temp?.email;
-  console.log('ppp', isAuthenticated, 're', loggedIn);
 
   return (
     <>

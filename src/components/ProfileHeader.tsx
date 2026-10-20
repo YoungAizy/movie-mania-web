@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Avatar } from '@mui/material';
 import { Settings as SettingsIcon } from '@mui/icons-material';
 import '../styles/profileHeader.scss';
@@ -20,9 +20,7 @@ const ProfileHeader = () => {
   const navigate = useNavigate();
   const getWatchlist = useWatchList();
     
-    console.log('profile user', auth.currentUser);
-    useEffect(()=>{
-      console.log('auth', auth);
+  useEffect(()=>{
       if(loggedIn && !watchlist){
         getWatchlist(setGenres, setTvGenres);
       }else{

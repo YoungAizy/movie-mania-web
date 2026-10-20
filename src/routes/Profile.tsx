@@ -18,14 +18,12 @@ export default function Profile() {
 
     useEffect(()=>{
       if(!loggedIn && temp?.email){
-        console.log("logging in...")
         async function login(){
           try{
             await auth.login(temp.email, temp.password)
             setTemp(null)
           }catch(error){
-            console.log(error);
-            alert('An Error occured, couldn\'t sign you in');
+            alert("An Error occured, couldn't sign you in");
           }
         }
         login();

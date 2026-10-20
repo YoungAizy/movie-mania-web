@@ -8,10 +8,10 @@ import { AppContext } from "../Context/AppContext.tsx";
 const useWatchList = () => {
     const {user} = useContext(AuthContext);
     const {setWatchlist} = useContext(AppContext);
+    const userId = user.userId || user.uid;
     const getWatchList = (setGenres, setTvGenres): void=>{
-        onValue(ref(db, 'users/' + user.userId + '/watchlist'), (snapshot) =>{
+        onValue(ref(db, 'users/' + userId ), (snapshot) =>{
             if(snapshot.exists()) {
-              console.log(snapshot.val());
               setGenres(snapshot.val().movies);
               setTvGenres(snapshot.val().television);
               setWatchlist(snapshot.val());

@@ -38,7 +38,6 @@ export default function BottomNav() {
     <BottomNavigation
       value={value}
       onChange={(event, newValue) => {
-        console.log("BottomNav event:", event)
         setValue(newValue);
       }}
       showLabels

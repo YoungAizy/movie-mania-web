@@ -38,7 +38,7 @@ const SigninModal = ({isOpen, setOpen, setProcessing}) => {
       const user = await auth.login(email, password);
       user && navigate('/profile');
     }catch(error){
-      console.log(error);
+      console.error(error);
       setProcessing(false);
       alert("Couldn't sign you in. An error occured.");
     }
@@ -65,11 +65,7 @@ const SigninModal = ({isOpen, setOpen, setProcessing}) => {
               <h2 style={{textAlign:"center", color:"antiquewhite", marginTop: 8 }}>Sign-In</h2>
               <AuthForm e_mail={email} setEmail={setEmail} 
                 passwrd={password} setPasswrd={setPassword} passwrdLabel='Password:' />
-              <p style={{
-                // marginLeft:32
-                marginLeft: 8,
-                marginTop: 4
-                }}>
+              <p className="forgot-password">
                 <Link to="/" style={{color:"whitesmoke"}}>forgot Password</Link>
               </p>
               <div className="flex-center">

@@ -14,7 +14,6 @@ function SearchInfo() {
     useEffect(()=>{
       const fetchData = async()=>{
         const { data } = await axios(`https://api.themoviedb.org/3/${type}/${id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`);
-        console.log('data:', data)
         setContent(data)
       }
  

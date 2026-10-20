@@ -18,7 +18,6 @@ const HorizontalTimeline = ({ content, credits }) => {
 
     useEffect(()=>{
         if(!scrollPaused.current){
-            console.log("Entered if statement")
             stop();
             scrollerID.current = scroll();
         }
@@ -28,7 +27,6 @@ const HorizontalTimeline = ({ content, credits }) => {
     const toggleScrollState = ()=>{
 
         if(!scrollPaused.current){
-            console.log("Entered if statement")
             stop();
         }else{
             scrollerID.current = scroll();

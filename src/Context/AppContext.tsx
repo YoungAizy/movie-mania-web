@@ -40,25 +40,28 @@ const collectionReducer = (state, action)=>{
     }
 export const AppContextProvider = ({children})=>{
     // const [searchContent, setSearchContent] = useState(null)
-    // const [selected, setSelected] = useState(null);
+    const [selected, setSelected] = useState(null);
     const [watchlist, setWatchlist] = useState<watchlistType | null>(null);
     const [collections, setCollections] = useState<{}|null>(null);
     const publicCollection = useCollections();
     const collectionInit = async(state)=>{
-        console.log("hello kitty!")
        if(!sessionStorage.getItem("movies") && !sessionStorage.getItem("shows") && !sessionStorage.getItem("people")){
-            console.log("something collection")
-            const result = await publicCollection.getCollection();
-            console.log('App Context', result);
-            const faves = {
-                people: result?.people || {},
-                tv: result?.shows || {},
-                movie: result?.movies || {} 
-            }
-            sessionStorage.setItem('people', JSON.stringify(faves.people));
-            sessionStorage.setItem('shows', JSON.stringify(faves.tv));
-            sessionStorage.setItem('movies', JSON.stringify(faves.movie));
-            return faves;
+            const authenticated = JSON.parse(localStorage.getItem('user'))?.loggedIn;
+            if(authenticated){
+                const result = await publicCollection.getCollection();
+
+                const faves = {
+                    people: result?.people || {},
+                    tv: result?.shows || {},
+                    movie: result?.movies || {} 
+                }
+                sessionStorage.setItem('people', JSON.stringify(faves.people));
+                sessionStorage.setItem('shows', JSON.stringify(faves.tv));
+                sessionStorage.setItem('movies', JSON.stringify(faves.movie));
+                return faves;
+            }else
+                return state;
+
        }else
         return state;
     }
@@ -66,7 +69,7 @@ export const AppContextProvider = ({children})=>{
         
         return(
         <AppContext.Provider 
-            value={{watchlist, setWatchlist, collection, setCollection, collections, setCollections
+            value={{watchlist, setWatchlist, collection, setCollection, collections, setCollections, selected, setSelected
             }}>
             {children}
         </AppContext.Provider>

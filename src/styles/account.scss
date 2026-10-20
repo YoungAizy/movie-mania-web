@@ -10,7 +10,9 @@
 }
 
 .watchlist{
-    width: 70%;
+    // width: 70%;
+    width: 65%;
+    padding: 0 1rem;
 }
 
 .watchlist-wrapper{
@@ -19,6 +21,7 @@
 
 .auth-form-wrapper{
     width: 80%;
+    padding-top: 1rem;
 }
 
 @media screen and (max-width:420px) {
@@ -30,5 +33,8 @@
 @media screen and (max-width:600px) {
     .auth-form-wrapper, .watchlist{
         width: 90%;
+    }
+    .watchlist{
+        padding: 0;
     }
 }

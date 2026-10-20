@@ -14,7 +14,6 @@ const Movies = ({urlGenres, content, setContent }) => {
     useEffect(()=>{
         const wait = async()=>{
             const favored = await collection;
-            console.log('favored', favored);
             setFavoredMovies(favored.movie)
         }
         wait();
@@ -25,13 +24,10 @@ const Movies = ({urlGenres, content, setContent }) => {
             try{
                 const { data } =
                     await axios(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=true&page=${page}&with_genres=${urlGenres}`);
-                    console.log("data", data);
                 setContent(data.results);
                 setNumOfPages(data.total_pages);
                 data && setIsLoading(false);
             }catch(error){
-                console.log(error.message);
-                console.log("ERROR:", error);
                 setIsLoading(false)
             }
         }

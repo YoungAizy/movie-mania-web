@@ -6,17 +6,16 @@ import { AuthContext } from "../Context/AuthContext.tsx";
 import { signInWithEmailAndPassword, updatePassword, updateProfile, verifyBeforeUpdateEmail } from "firebase/auth";
 
 
-const useUpdate = ()=>{
-    const {user,setUser} = useContext(AuthContext)
-    const {setWatchlist} = useContext(AppContext)
+const useProfileUpdate = ()=>{
+    const {user,setUser} = useContext(AuthContext);
+    const {setWatchlist} = useContext(AppContext);
 
     const watchList = (watchlist, setProcessing)=>{
     
         const update = ()=>{
             const newWatchList = {['users/' + user.userId + '/watchlist']: watchlist}
-            console.log('*****', newWatchList);
             Update(ref(db),newWatchList).then(()=>{setProcessing(false);setWatchlist(watchlist)})
-            .catch(error=> console.log("ERROR UPDATING DB:", error));
+            .catch(error=> console.error("ERROR UPDATING DB:", error));
         }
         update();
     }
@@ -30,11 +29,9 @@ const useUpdate = ()=>{
                     alert('Update Successful');
                 })
                 .catch(error=>{
-                    console.log('Couldn\'t Update Password:', error);
                     setProcessing(false);
                 });
             }).catch(error=>{
-                console.log("An Error Occured:", error);
                 setProcessing(false);
                 alert('There was an error authenticating your credentials: '+ error.message);
             })
@@ -55,14 +52,12 @@ const useUpdate = ()=>{
                     // next();
                 })
                 .catch(error=>{
-                    console.log('Couldn\'t Update Email:', error);
                     alert('Couldn\'t Update Email: '+ error.message);
                     setProcessing(false);
                 });
 
             })
             .catch(error=>{
-                console.log("An Error Occured:", error);
                 alert('There was an error authenticating your credentials: '+ error.message);
                 setProcessing(false);
             });
@@ -92,4 +87,4 @@ const useUpdate = ()=>{
 
 }
 
-export default useUpdate;
+export default useProfileUpdate;

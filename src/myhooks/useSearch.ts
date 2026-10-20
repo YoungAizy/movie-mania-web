@@ -5,7 +5,7 @@ const useSearch = () => {
             const { data } = await axios(`https://api.themoviedb.org/3/search/${type}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&query=${searchText}&page=1&include_adult=false`);
             return data.results;
         } catch (error) {
-            console.log(error);
+            console.error(error);
             return null;
         }
     }

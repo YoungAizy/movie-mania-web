@@ -14,7 +14,7 @@ const TvShows = ({ urlGenres, content, setContent  }) => {
     useEffect(()=>{
         const wait = async()=>{
             const favored = await collection;
-            console.log('favored', favored);
+
             setFavoredShows(favored.tv)
         }
         wait();
@@ -30,8 +30,6 @@ const TvShows = ({ urlGenres, content, setContent  }) => {
                 setNumOfPages(data.total_pages);
                 setIsLoading(false)
             }catch(error){
-                console.log(error.message);
-                console.log("ERROR:", error);
                 setIsLoading(false)
             }
         }

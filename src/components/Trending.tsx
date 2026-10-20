@@ -13,7 +13,7 @@ export const Trending = () => {
     useEffect(()=>{
         const wait = async()=>{
             const favored = await collection;
-            console.log('favored', favored);
+
             setFavoredMovies(favored.movie)
         }
         wait();
@@ -24,7 +24,7 @@ export const Trending = () => {
     const fetch = async() => {
       const { data } =
         await axios(`https://api.themoviedb.org/3/trending/movie/week?api_key=${process.env.REACT_APP_API_KEY}`)
-        console.log("trending", data.results[0].original_title);
+        
         setContent(data.results);
     }
 

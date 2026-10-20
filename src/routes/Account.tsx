@@ -12,7 +12,7 @@ import WatchList from "../components/WatchList.tsx";
 import ProgressOverlay from "../components/ProgressOverlay.tsx";
 import { AppContext } from "../Context/AppContext.tsx";
 import useWatchList from "../myhooks/useWatchList.ts";
-import useUpdate from "../myhooks/useUpdate.ts";
+import useProfileUpdate from "../myhooks/useProfileUpdate.ts";
 import ConfirmationDialog from "../components/dialogs/ConfirmationDialog.tsx";
 
 const Account = ()=>{
@@ -30,7 +30,7 @@ const Account = ()=>{
 
     const navigate = useNavigate();
     const getWatchList = useWatchList();
-    const update = useUpdate();
+    const update = useProfileUpdate();
     //Update WatchList
     const [genres, setGenres] = useState([]);
     const [tvGenres, setTvGenres] = useState([]);
@@ -56,7 +56,7 @@ const Account = ()=>{
             try {
                 getWatchList(setGenres,setTvGenres);
             } catch (error) {
-                console.log("Error happened", error);
+                console.error("Error happened", error);
             }
         }else{
             setGenres(watchlist?.movies || [])
@@ -66,10 +66,8 @@ const Account = ()=>{
     },[watchlist])
 
     const updateUsername = ()=>{
-        console.log("hello");
         if(username === user.username) return;
         const _update = ()=>{
-            console.log("hello yielkd 2")
             setIsDialogOpen(false)
             setProcessing(true);
             update.username(username,setProcessing);
@@ -86,7 +84,6 @@ const Account = ()=>{
     }
 
     const updateEmail = ()=>{
-        console.log("hey there")
         // const verify = (code)=>{
         //     setIsDialogOpen(false)
         //     setProcessing(true)
@@ -99,7 +96,6 @@ const Account = ()=>{
         //     setIsDialogOpen(true);
         // }
         const _update = (password)=>{
-            console.log("new password", password);
             setIsDialogOpen(false)
             setReject(null);
             setProcessing(true)
@@ -145,8 +141,14 @@ const Account = ()=>{
                         passwrd2={newPassword} setPasswrd2={setNewPassword} passwrd2Label="New Password:" />
                 </div>
                 <StyledBtn onClick={updatePassword} sx={{margin:'1rem 1rem .5rem'}}>Update</StyledBtn>
-                <Divider sx={{margin:'1rem', width:'80%', height:2, backgroundColor:'aliceblue'}} />
-                <StyledBtn onClick={()=>console.log()} sx={{margin:'1rem'}}>Delete Account</StyledBtn>
+                <Divider sx={theme=>({
+                    margin:'1rem', width:'73%', height:2, 
+                    backgroundColor:'aliceblue',
+                    [theme.breakpoints.down('sm')]:{
+                        width:'82%'
+                    }
+                    })} />
+                <StyledBtn btnColor ='error' onClick={()=>{}} sx={{margin:'1rem'}}>Delete Account</StyledBtn>
                 <WatchList  open={open} setOpen={setOpen} setProcessing={setProcessing} watchList={watchlist} isUpdate />
                 <ProgressOverlay open={processing} authText='Updating...' />
                 <ConfirmationDialog open={isDialogOpen} setOpen={setIsDialogOpen} oldVal={'noit'} newVal={newVal} field={field}

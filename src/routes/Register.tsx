@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import UserForm from "../components/UserForm.tsx";
 import NavBar from "../components/NavBar.tsx";
 import AuthForm from "../components/AuthForm.tsx";
@@ -6,6 +6,7 @@ import StyledBtn from "../components/StyledBtn.tsx";
 import WatchList from "../components/WatchList.tsx";
 import "../styles/register.scss"
 import { AuthContext } from "../Context/AuthContext.tsx";
+import useAuth from '../myhooks/useAuth.ts'
 
 const Register = ()=>{
     const [dialogOpen,setDialogOpen] = useState(false);
@@ -21,9 +22,9 @@ const Register = ()=>{
 
     const [open,setOpen] = useState(false);
 
-    const {user, setUser, setTemp} = useContext(AuthContext);
+    const { setTemp } = useContext(AuthContext);
 
-    const [worker, setWorker] = useState<any>(null);
+    const auth = useAuth();
 
     //WatchList: Genres
     // const [watchList, setWatchList]= useState([])
@@ -34,44 +35,15 @@ const Register = ()=>{
     //     setWatchList([...watchList, genre]);
     // }
 
-    useEffect(()=>{
-        const w = new Worker(new URL('../workers/signup.worker.ts', import.meta.url));
-        setWorker(w);
-        // setUser( new Promise(()=>{}));
-        // worker.current.onmessage=({data})=>{
-        //     switch (data.type) {
-        //         case 'registered':
-        //             user.current = Promise.resolve(data.data);
-        //             break;
-        //         case 'failure':
-        //             console.log(data.data);
-        //             alert(data.data);
-        //             break;
-        //         case 'close':
-        //             break;
-        //         default:
-        //             break;
-        //     }
-        // }
-    },[]);
-    useEffect(()=>{
-        console.log('useEffect');
-        if(worker){
-            worker.onmessage = ({data})=>{
-                console.log('onmessage', data);
-                if(data.type === 'registered') {
-                    setUser(data.data);
-                    setProcessing(false);
-                    setOpen(true);
-                }
-                console.log('User', user);
-            }}
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[worker]);
-    useEffect(()=>{
-        console.log('User changed', user);
-    },[user])
-
+    const cb = (error)=>{
+        if(error){
+            setProcessing(false);
+            alert("Registration failed");
+            return;
+        }
+        setProcessing(false);
+        setOpen(true);
+    }
     const register = e=>{
         e.preventDefault();
         if(password !== verifyPassword) {
@@ -83,8 +55,7 @@ const Register = ()=>{
             return
         }
         setTemp({email,password});
-        console.log('hello');
-        worker.postMessage({username, password,email,picture, metadata})
+        auth.register({username, password,email,picture, metadata},cb)
         setProcessing(true);
     }
 

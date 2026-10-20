@@ -13,22 +13,18 @@ const useCollections = () => {
     const save = (data, itemType:string , cb:Function, collection = "public")=>{
         update(ref(db,path+collection+"/"+itemType),data)
         .then(()=>{
-            console.log('saved...');
             cb();
         })
         .catch(error=>{
-            console.log("Error writing collection to database:", error);
             cb(error);
         });
     }
     const unSave = ( fieldPath:string , cb:Function, collection = "public")=>{
         remove(ref(db,path+collection+"/"+fieldPath))
         .then(()=>{
-            console.log('removed...');
             cb();
         })
         .catch(error=>{
-            console.log("Error deleting field from database:", error);
             cb(error);
         });
     }

@@ -37,6 +37,7 @@ const PersonContent = ({ id }) => {
                     <span className='details'><strong>Place of Birth: </strong>{content.place_of_birth} </span>
                 </div>
                 <div className='biography' >
+                    <h3>Appearances</h3>
                     <HorizontalTimeline content={filtered} credits={ credits}/>
                     <div>
                         <h3>Biography</h3> 

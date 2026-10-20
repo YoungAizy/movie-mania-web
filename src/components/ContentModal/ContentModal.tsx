@@ -44,7 +44,6 @@ export default function ContentModal({children, type, id, faves= {}, stored, con
     const [streamProviders, setStreamProviders] = useState([]);
 
     const loggedIn = isLoggedIn();
-    console.log('logedIn',loggedIn)
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const searchText = searchParams.get('search');
@@ -79,7 +78,6 @@ export default function ContentModal({children, type, id, faves= {}, stored, con
     }
     const fetchStreamProviders = async ()=>{
       const {data: {results}} = await axios(`https://api.themoviedb.org/3/${type}/${id}}/watch/providers?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&locale=US`);
-      console.log("Watch Providers:",results);
       setStreamProviders(results.US?.flatrate);
     }
     useEffect(() => {
@@ -107,7 +105,6 @@ export default function ContentModal({children, type, id, faves= {}, stored, con
           }
           collections.unSave(itemType+'/'+id,cb);
       } else {
-        console.log('else entered',faves);
           // Add a new favourite person
           const data = {[id]:content};
           faves[id] = data;
@@ -124,7 +121,6 @@ export default function ContentModal({children, type, id, faves= {}, stored, con
     }
 
   const saveFave = (e) => {
-    console.log("new fave", content)
     switch (type) {
       case 'movie':
         saveToStorage(e, "movies",'movies')

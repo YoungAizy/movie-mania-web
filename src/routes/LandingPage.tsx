@@ -1,5 +1,5 @@
 /* eslint-disable no-multi-str */
-import React, {useContext, useRef, useState} from "react";
+import { useRef, useState} from "react";
 import NavBar from "../components/NavBar.tsx";
 import { Container } from "@mui/material";
 import SearchField from '../components/SearchField.tsx'
@@ -9,23 +9,20 @@ import "../styles/welcomePage.scss"
 import CardItems from "../components/CardItems.tsx";
 import useSearch from "../myhooks/useSearch.ts";
 import { useSearchParams } from "react-router-dom";
-import { AppContext } from "../Context/AppContext.tsx";
 import TypeSelect from "../components/TypeSelect.tsx";
 
 export default function WelcomePage(){
     const [type,setType] = useState('movie');
     const [isLoading, setIsLoading] = useState(false);
-    const [content, setContent] = useState(null);
+    const [searchContent, setSearchContent] = useState(null);
     const [searchText, setSearchText] = useState("");
     const firstClick = useRef(true);
     const [searchParams, setSearchParams] = useSearchParams();
     const open = searchParams.get("signin")
     const [dialogOpen,setDialogOpen] = useState(open ? Boolean(open):false);
-    const search = useSearch();
-    const {setSearchContent} = useContext(AppContext)
+    const searchQuery = useSearch();
     
     const setTransitions = ()=>{
-        console.log("first click!")
         const collapse = document.getElementById('introduction');
         const container =document.getElementById('intro-text');
         const searchWrapper = document.getElementById('search-wrapper');
@@ -43,15 +40,14 @@ export default function WelcomePage(){
 
         firstClick.current = false;
     }
+
     const searchBtnClick = async(e)=>{
         setIsLoading(true);
         e.target.classList.add('inline-btn');
-        console.log("hellp", e.target.classList)
-        const result = await search(type,searchText);
+        const result = await searchQuery(type,searchText);
         if(firstClick) {
             setTransitions();
             setTimeout(()=>{
-                setContent(result);
                 setSearchContent(result);
                 setIsLoading(false);
             },4100);
@@ -60,7 +56,6 @@ export default function WelcomePage(){
             setIsLoading(false)
         }
         setSearchParams({search:searchText});
-        console.log("Hey", result);
     }
 
     return(
@@ -89,7 +84,7 @@ export default function WelcomePage(){
                 <div className="landing-search-content">
                     {!isLoading && <h3 style={{textAlign:"center", marginTop:12}}>{searchText}</h3>}
                     <div id="card-list-wrapper">
-                        <CardItems loading={isLoading} data={content} faves={null} type={type} is_Search={true}/>
+                        <CardItems loading={isLoading} data={searchContent} faves={null} type={type} is_Search={true}/>
                     </div>
                 </div>
             </div>
