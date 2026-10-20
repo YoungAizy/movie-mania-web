@@ -1,0 +1,18 @@
+{
+   "rules": {
+    "users":{
+      "$uid":{
+        ".read": "$uid === auth.uid",
+    		".write": "$uid === auth.uid",
+        "watchlist":{
+          "movies":{".indexOn": ["name"]}
+        }
+      }
+    },
+    "movies":{
+      ".indexOn": ["name"]
+    },
+    ".read": "true",
+    ".write": "true"
+  }
+}
